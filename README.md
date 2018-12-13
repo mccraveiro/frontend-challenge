@@ -2,7 +2,7 @@
 
 Using the provided [dataset](/support/names.json) and [mockup](/support/mockup.png), we'd like you to create a simple single-page application using plain JavaScript (no libraries), HTML and CSS. The application is a basic searchable list of popular dog names in New York City and should look like the following mockup:
 
-![mockup](/support/mock.png)
+![mockup](/support/mockup.png)
 
 The app is made up of 3 components.
 
