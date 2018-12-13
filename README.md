@@ -4,13 +4,13 @@ Using the provided [dataset](/support/names.json) and [mockup](/support/mockup.p
 
 ![mockup](/support/mockup.png)
 
-The app is made up of 3 components.
+**The app is made up of 3 components.**
 
 * A simple header
 * A search input
 * Name cards.
 
-Each of the name cards should display the following information:
+**Each of the name cards should display the following information:**
 
 * Overall popularity ranking
 * Total number of dogs with that name
