@@ -27,7 +27,7 @@ The challenge is designed in a way that you'll need to do some work with the dat
 
 ## Requirements
 
-* No javascript libraries (except for testing)
+* No javascript libraries (except for build tools or testing)
 * Unit testing
 * Documentation
 
