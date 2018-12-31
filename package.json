@@ -1,6 +1,9 @@
 {
   "name": "ui-challenge",
   "version": "0.2.0",
+  "scripts": {
+    "dataset": "./scripts/parse-dataset.js"
+  },
   "author": "Mateus Craveiro <mccraveiro@gmail.com>",
   "license": "MIT"
 }
