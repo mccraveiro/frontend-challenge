@@ -1,5 +1,15 @@
 const Component = require('./component')
 
+function updateDOMProperties(dom, props) {
+  if (props.className) {
+    dom.className = props.className
+  } else {
+    dom.removeAttribute('class')
+  }
+
+  dom.onchange = props.onchange
+}
+
 function createInstance (element) {
   if (typeof element === 'string') {
     return {
@@ -12,15 +22,7 @@ function createInstance (element) {
     const props = element.props || {}
     let children = props.children || []
 
-    if (props.className) {
-      dom.className = props.className
-    }
-
-    if (props.onchange) {
-      dom.onchange = props.onchange
-    }
-
-    children = children.map(createInstance)
+    updateDOMProperties(dom, props)
     children.forEach(child => dom.appendChild(child.dom))
 
     return {
