@@ -1,44 +1,51 @@
 const Component = require('./component')
 
 function createInstance (element) {
-  let el = element
-
-  if (typeof el === 'string') {
+  if (typeof element === 'string') {
     return {
       element,
-      dom: document.createTextNode(el),
+      dom: document.createTextNode(element),
       children: []
     }
-  }
+  } else if (typeof element.type === 'string') {
+    const dom = document.createElement(element.type)
+    const props = element.props || {}
+    let children = props.children || []
 
-  if (typeof el.type === 'function') {
-    const props = el.props || {}
-    el = new el.type(props)
+    if (props.className) {
+      dom.className = props.className
+    }
 
-    if (el instanceof Component) {
-      el = el.render()
+    if (props.onchange) {
+      dom.onchange = props.onchange
+    }
+
+    children = children.map(createInstance)
+    children.forEach(child => dom.appendChild(child.dom))
+
+    return {
+      element,
+      dom,
+      children,
     }
   }
 
-  const dom = document.createElement(el.type)
-  const props = el.props || {}
-  let children = props.children || []
-
-  if (props.className) {
-    dom.className = props.className
-  }
-
-  if (props.onchange) {
-    dom.onchange = props.onchange
-  }
-
-  children = children.map(createInstance)
-  children.forEach(child => dom.appendChild(child.dom))
+  const props = element.props || {}
+  const children = props.children || []
+  const component = new element.type(props)
+  const componentInstance = component instanceof Component
+    ? component
+    : null
+  const childElement = componentInstance
+    ? component.render()
+    : component
+  const dom = createInstance(childElement).dom
 
   return {
     element,
     dom,
     children,
+    componentInstance,
   }
 }
 
