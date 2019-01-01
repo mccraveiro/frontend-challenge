@@ -10,6 +10,11 @@ test('returns an object with type "div"', () => {
 })
 
 test('returns an object with props', () => {
+  const element = createElement('div')
+  expect(typeof element.props).toBe('object')
+})
+
+test('returns an object with passed property', () => {
   const element = createElement('div', { foo: 'bar' })
   expect(element.props.foo).toBe('bar')
 })
