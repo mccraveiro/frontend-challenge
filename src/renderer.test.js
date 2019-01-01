@@ -78,6 +78,17 @@ test('write elements recursively', () => {
   expect(document.body.innerHTML).toBe('<ul><li><a>Hello world</a></li></ul>')
 })
 
+test('allow undefined props', () => {
+  document.body.innerHTML = ''
+
+  const component = {
+    type: 'div',
+  }
+  Renderer(component)
+
+  expect(document.body.innerHTML).toBe('<div></div>')
+})
+
 // Reconciliation
 
 test('do not duplicate div on body', () => {

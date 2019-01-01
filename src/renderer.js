@@ -1,7 +1,7 @@
 function createElement (component) {
   const element = document.createElement(component.type)
   const props = component.props || {}
-  const children = component.props.children || []
+  const children = props.children || []
 
   if (props.className) {
     element.className = props.className
