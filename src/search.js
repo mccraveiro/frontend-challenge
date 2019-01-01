@@ -1,6 +1,9 @@
-function Search () {
+function Search (props = {}) {
   return {
-    type: 'input'
+    type: 'input',
+    props: {
+      onchange: props.onchange,
+    }
   }
 }
 

@@ -9,3 +9,11 @@ test('has type of input', () => {
   const search = Search()
   expect(search.type).toBe('input')
 })
+
+test('receive onchange event listener', () => {
+  const onchange = () => console.log('Hello')
+  const search = Search({
+    onchange,
+  })
+  expect(search.props.onchange).toBe(onchange)
+})
