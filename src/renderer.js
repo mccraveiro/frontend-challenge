@@ -1,4 +1,4 @@
-function Renderer (component, rootElement = document.body) {
+function createElement (component) {
   const element = document.createElement(component.type)
   const props = component.props || {}
   const children = component.props.children || []
@@ -12,11 +12,31 @@ function Renderer (component, rootElement = document.body) {
       const textElement = document.createTextNode(child)
       element.appendChild(textElement)
     } else {
-      Renderer(child, element)
+      const childElement = createElement(child)
+      element.appendChild(childElement)
     }
   })
 
-  rootElement.appendChild(element)
+  return element
+}
+
+function Renderer (component, rootElement = document.body) {
+  const element = createElement(component)
+  let rendered = false
+
+  Array
+    .from(rootElement.children)
+    .forEach((child) => {
+      if (child.isEqualNode(element)) {
+        rendered = true
+      } else {
+        rootElement.removeChild(child)
+      }
+    })
+
+  if (!rendered) {
+    rootElement.appendChild(element)
+  }
 }
 
 module.exports = Renderer
