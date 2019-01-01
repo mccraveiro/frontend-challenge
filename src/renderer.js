@@ -7,6 +7,10 @@ function createElement (component) {
     element.className = props.className
   }
 
+  if (props.onchange) {
+    element.onchange = props.onchange
+  }
+
   children.forEach((child) => {
     if (typeof child === 'string') {
       const textElement = document.createTextNode(child)

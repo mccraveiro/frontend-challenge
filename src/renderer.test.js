@@ -89,6 +89,22 @@ test('allow undefined props', () => {
   expect(document.body.innerHTML).toBe('<div></div>')
 })
 
+test('attach onchange event listener', () => {
+  document.body.innerHTML = ''
+
+  const onchange = () => console.log('Hello world')
+
+  const component = {
+    type: 'input',
+    props: {
+      onchange,
+    },
+  }
+  Renderer(component)
+
+  expect(document.body.firstChild.onchange).toBe(onchange)
+})
+
 // Reconciliation
 
 test('do not duplicate div on body', () => {
