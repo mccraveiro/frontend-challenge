@@ -1,10 +1,12 @@
+const createElement = require('./createElement')
+
 function Search (props = {}) {
-  return {
-    type: 'input',
-    props: {
+  return createElement(
+    'input',
+    {
       onchange: props.onchange,
     }
-  }
+  )
 }
 
 module.exports = Search

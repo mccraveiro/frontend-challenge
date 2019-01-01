@@ -1,17 +1,13 @@
+const createElement = require('./createElement')
+
 function List (props = {}) {
   const data = props.data || []
 
-  return {
-    type: 'ul',
-    props: {
-      children: data.map((child) => ({
-        type: 'li',
-        props: {
-          children: [child],
-        }
-      }))
-    }
-  }
+  return createElement(
+    'ul',
+    {},
+    ...data.map(child => createElement('li', {}, child))
+  )
 }
 
 module.exports = List

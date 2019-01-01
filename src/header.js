@@ -1,11 +1,13 @@
+const createElement = require('./createElement')
+
 function Header () {
-  return {
-    type: 'header',
-    props: {
+  return createElement(
+    'header',
+    {
       className: 'header',
-      children: ['Popular dogs names in NYC'],
     },
-  }
+    'Popular dogs names in NYC'
+  )
 }
 
 module.exports = Header
