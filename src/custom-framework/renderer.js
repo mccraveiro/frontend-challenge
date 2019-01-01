@@ -1,59 +1,57 @@
 const Component = require('./component')
 
-function createElement (component) {
-  if (typeof component.type === 'function') {
-    const props = component.props || {}
-    component = new component.type(props)
+function createInstance (element) {
+  let el = element
 
-    if (component instanceof Component) {
-      component = component.render()
+  if (typeof el === 'string') {
+    return {
+      element,
+      dom: document.createTextNode(el),
+      children: []
     }
   }
 
-  const element = document.createElement(component.type)
-  const props = component.props || {}
-  const children = props.children || []
+  if (typeof el.type === 'function') {
+    const props = el.props || {}
+    el = new el.type(props)
+
+    if (el instanceof Component) {
+      el = el.render()
+    }
+  }
+
+  const dom = document.createElement(el.type)
+  const props = el.props || {}
+  let children = props.children || []
 
   if (props.className) {
-    element.className = props.className
+    dom.className = props.className
   }
 
   if (props.onchange) {
-    element.onchange = props.onchange
+    dom.onchange = props.onchange
   }
 
-  children.forEach((child) => {
-    if (typeof child === 'string') {
-      const textElement = document.createTextNode(child)
-      element.appendChild(textElement)
-    } else {
-      const childElement = createElement(child)
-      element.appendChild(childElement)
-    }
-  })
+  children = children.map(createInstance)
+  children.forEach(child => dom.appendChild(child.dom))
 
-  return element
+  return {
+    element,
+    dom,
+    children,
+  }
 }
 
-function Renderer (component, rootElement = document.body) {
-  const element = createElement(component)
-  let rendered = false
+function Renderer (element, target = document.body, previousInstance) {
+  const instance = createInstance(element)
 
-  Array
-    .from(rootElement.children)
-    .forEach((child) => {
-      if (child.isEqualNode(element)) {
-        rendered = true
-      } else {
-        rootElement.removeChild(child)
-      }
-    })
-
-  if (!rendered) {
-    rootElement.appendChild(element)
+  if (!previousInstance) {
+    target.appendChild(instance.dom)
+  } else if (previousInstance && !instance.dom.isEqualNode(previousInstance.dom)) {
+    target.replaceChild(instance.dom, previousInstance.dom)
   }
 
-  window.requestAnimationFrame(Renderer.bind(null, component, rootElement))
+  window.requestAnimationFrame(Renderer.bind(null, element, target, instance))
 }
 
 module.exports = Renderer

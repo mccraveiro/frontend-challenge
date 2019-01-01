@@ -141,16 +141,6 @@ test('schedule next animation frame re-render', () => {
 })
 
 // Reconciliation
-
-test('do not duplicate div on body', () => {
-  document.body.innerHTML = '<div></div>'
-
-  const element = createElement('div')
-  Renderer(element)
-
-  expect(document.body.innerHTML).toBe('<div></div>')
-})
-
 test('do not remove siblings', () => {
   document.body.innerHTML = ''
 
@@ -164,13 +154,20 @@ test('do not remove siblings', () => {
   expect(document.body.innerHTML).toBe('<ul><li><a>Hello world</a></li><li><a>Hello world</a></li></ul>')
 })
 
-test('do not re-render div on body', () => {
-  document.body.innerHTML = '<div></div>'
-  const initialElement = document.body.firstChild
-
+test('do not re-render div', () => {
+  const initialDOM = document.createElement('div')
   const element = createElement('div')
-  Renderer(element)
-  const finalElement = document.body.firstChild
 
-  expect(initialElement.isSameNode(finalElement)).toBe(true)
+  document.body.innerHTML = ''
+  document.body.appendChild(initialDOM)
+
+  Renderer(element, document.body, {
+    element,
+    dom: initialDOM,
+    children: [],
+  })
+
+  const finalDOM = document.body.firstChild
+
+  expect(initialDOM.isSameNode(finalDOM)).toBe(true)
 })
