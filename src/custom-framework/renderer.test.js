@@ -130,6 +130,16 @@ test('render custom component', () => {
   expect(document.body.innerHTML).toBe('<div></div>')
 })
 
+test('schedule next animation frame re-render', () => {
+  document.body.innerHTML = ''
+  const originalFn = window.requestAnimationFrame
+  window.requestAnimationFrame = jest.fn((...args) => originalFn(...args))
+
+  Renderer(createElement('div'))
+
+  expect(window.requestAnimationFrame).toBeCalled()
+})
+
 // Reconciliation
 
 test('do not duplicate div on body', () => {

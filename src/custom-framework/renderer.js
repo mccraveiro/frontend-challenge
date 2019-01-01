@@ -52,6 +52,8 @@ function Renderer (component, rootElement = document.body) {
   if (!rendered) {
     rootElement.appendChild(element)
   }
+
+  window.requestAnimationFrame(Renderer.bind(null, component, rootElement))
 }
 
 module.exports = Renderer
