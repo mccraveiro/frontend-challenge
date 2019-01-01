@@ -171,3 +171,79 @@ test('do not re-render div', () => {
 
   expect(initialDOM.isSameNode(finalDOM)).toBe(true)
 })
+
+test('do not re-render div but update text', () => {
+  const initialDOM = document.createElement('div')
+  const child = document.createTextNode('Hello world')
+  initialDOM.appendChild(child)
+  const element = createElement('div', {}, 'Foo')
+
+  document.body.innerHTML = ''
+  document.body.appendChild(initialDOM)
+
+  Renderer(element, document.body, {
+    element,
+    dom: initialDOM,
+    children: [{
+      element: 'Hello world',
+      dom: child,
+      children: [],
+    }],
+  })
+
+  const finalDOM = document.body.firstChild
+
+  expect(document.body.innerHTML).toBe('<div>Foo</div>')
+})
+
+test('do not re-render div but replace children', () => {
+  const initialDOM = document.createElement('div')
+  const child = document.createElement('a')
+  initialDOM.appendChild(child)
+
+  const element = createElement('div', {}, createElement('span'))
+
+  document.body.innerHTML = ''
+  document.body.appendChild(initialDOM)
+
+  Renderer(element, document.body, {
+    element,
+    dom: initialDOM,
+    children: [{
+      element: createElement('a'),
+      dom: child,
+      children: [],
+    }],
+  })
+
+  const finalDOM = document.body.firstChild
+
+  expect(initialDOM.isSameNode(finalDOM)).toBe(true)
+  expect(document.body.innerHTML).toBe('<div><span></span></div>')
+})
+
+test('do not re-render div but remove children', () => {
+  const initialDOM = document.createElement('div')
+  const child = document.createElement('a')
+  initialDOM.appendChild(child)
+
+  const element = createElement('div')
+
+  document.body.innerHTML = ''
+  document.body.appendChild(initialDOM)
+
+  Renderer(element, document.body, {
+    element,
+    dom: initialDOM,
+    children: [{
+      element: createElement('a'),
+      dom: child,
+      children: [],
+    }],
+  })
+
+  const finalDOM = document.body.firstChild
+
+  expect(initialDOM.isSameNode(finalDOM)).toBe(true)
+  expect(document.body.innerHTML).toBe('<div></div>')
+})

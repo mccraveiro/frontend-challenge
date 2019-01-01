@@ -20,7 +20,7 @@ function createInstance (element) {
   } else if (typeof element.type === 'string') {
     const dom = document.createElement(element.type)
     const props = element.props || {}
-    let children = props.children || []
+    const children = (props.children || []).map(createInstance)
 
     updateDOMProperties(dom, props)
     children.forEach(child => dom.appendChild(child.dom))
@@ -51,14 +51,49 @@ function createInstance (element) {
   }
 }
 
-function Renderer (element, target = document.body, previousInstance) {
-  const instance = createInstance(element)
-
+function reconcile (element, parent, previousInstance) {
   if (!previousInstance) {
-    target.appendChild(instance.dom)
-  } else if (previousInstance && !instance.dom.isEqualNode(previousInstance.dom)) {
-    target.replaceChild(instance.dom, previousInstance.dom)
+    const instance = createInstance(element)
+    parent.appendChild(instance.dom)
+    return instance
+  } else if (element == null) {
+    parent.removeChild(previousInstance.dom)
+    return null
+  } else if (typeof previousInstance.element === 'string' && typeof element === 'string') {
+    previousInstance.dom.textContent = element
+    previousInstance.element = element
+    return previousInstance
+  } else if (previousInstance.element.type === element.type) {
+    updateDOMProperties(previousInstance.dom, element.props)
+    previousInstance.children = reconcileChildren(element, previousInstance)
+    previousInstance.element = element
+    return previousInstance
+  } else {
+    const instance = createInstance(element)
+    parent.replaceChild(instance.dom, previousInstance.dom)
+    parent.appendChild(instance.dom)
+    return instance
   }
+}
+
+function reconcileChildren (element, previousInstance) {
+  const instanceChildren = previousInstance.children
+  const elementChildren = element.props.children || []
+  const reconciliatedChildren = []
+  const childrenCount = Math.max(instanceChildren.length, elementChildren.length)
+
+  for (let i = 0; i < childrenCount; i++) {
+    const instanceChild = instanceChildren[i]
+    const elementChild = elementChildren[i]
+    const child = reconcile(elementChild, previousInstance.dom, instanceChild)
+    reconciliatedChildren.push(child)
+  }
+
+  return reconciliatedChildren
+}
+
+function Renderer (element, target = document.body, previousInstance) {
+  const instance = reconcile(element, target, previousInstance)
 
   window.requestAnimationFrame(Renderer.bind(null, element, target, instance))
 }
