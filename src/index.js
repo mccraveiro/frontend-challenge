@@ -1,4 +1,5 @@
 const Renderer = require('./renderer')
+const createElement = require('./createElement')
 const App = require('./app')
 
-Renderer(App(), document.getElementById('root'))
+Renderer(createElement(App), document.getElementById('root'))

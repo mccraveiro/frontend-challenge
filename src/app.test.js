@@ -1,11 +1,18 @@
+const Component = require('./component')
 const App = require('./app')
 
-test('returns an object', () => {
-  const app = App()
-  expect(typeof app).toBe('object')
+test('instance of Component', () => {
+  const app = new App()
+  expect(app instanceof Component).toBe(true)
 })
 
-test('returns header as child', () => {
-  const app = App()
-  expect(app.props.children[0].type).toBe('header')
+test('renders an object', () => {
+  const app = new App()
+  expect(typeof app.render()).toBe('object')
 })
+
+test('renders three children', () => {
+  const app = new App()
+  expect(app.render().props.children.length).toBe(3)
+})
+
