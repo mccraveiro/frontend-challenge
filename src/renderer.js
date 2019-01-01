@@ -1,4 +1,15 @@
+const Component = require('./component')
+
 function createElement (component) {
+  if (typeof component.type === 'function') {
+    const props = component.props || {}
+    component = new component.type(props)
+
+    if (component instanceof Component) {
+      component = component.render()
+    }
+  }
+
   const element = document.createElement(component.type)
   const props = component.props || {}
   const children = props.children || []

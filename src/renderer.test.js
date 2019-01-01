@@ -1,4 +1,5 @@
 const createElement = require('./createElement')
+const Component = require('./component')
 const Renderer = require('./renderer')
 
 test('write div to body', () => {
@@ -56,6 +57,77 @@ test('attach onchange event listener', () => {
   Renderer(element)
 
   expect(document.body.firstChild.onchange).toBe(onchange)
+})
+
+test('render custom element', () => {
+  document.body.innerHTML = ''
+
+  function customElement () {
+    return createElement('div')
+  }
+
+  Renderer(createElement(customElement))
+
+  expect(document.body.innerHTML).toBe('<div></div>')
+})
+
+test('render custom element with props', () => {
+  document.body.innerHTML = ''
+
+  function customElement (props) {
+    return createElement(props.tag)
+  }
+
+  Renderer(createElement(customElement, { tag: 'span' }))
+
+  expect(document.body.innerHTML).toBe('<span></span>')
+})
+
+test('render custom element with text children', () => {
+  document.body.innerHTML = ''
+
+  function customElement (props) {
+    return createElement(props.tag, {}, ...props.children)
+  }
+
+  Renderer(createElement(customElement, { tag: 'span' }, 'Hello world'))
+
+  expect(document.body.innerHTML).toBe('<span>Hello world</span>')
+})
+
+test('render custom element with custom children', () => {
+  document.body.innerHTML = ''
+
+  function customChild (props) {
+    return createElement('li', {}, ...props.children)
+  }
+
+  function customElement () {
+    return createElement(
+      'ul',
+      {},
+      createElement(customChild, {}, 'Foo'),
+      createElement(customChild, {}, 'Bar')
+    )
+  }
+
+  Renderer(createElement(customElement))
+
+  expect(document.body.innerHTML).toBe('<ul><li>Foo</li><li>Bar</li></ul>')
+})
+
+test('render custom component', () => {
+  document.body.innerHTML = ''
+
+  class customComponent extends Component {
+    render () {
+      return createElement('div')
+    }
+  }
+
+  Renderer(createElement(customComponent))
+
+  expect(document.body.innerHTML).toBe('<div></div>')
 })
 
 // Reconciliation
