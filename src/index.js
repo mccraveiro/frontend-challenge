@@ -1,6 +1,4 @@
 const Renderer = require('./renderer')
-const Header = require('./header')
+const App = require('./app')
 
-const header = Header()
-
-Renderer(header, document.getElementById('root'))
+Renderer(App(), document.getElementById('root'))
