@@ -1,5 +1,4 @@
-const createElement = require('./createElement')
-const Component = require('./component')
+const { Component, createElement } = require('./custom-framework')
 const Header = require('./header')
 const Search = require('./search')
 const List = require('./list')

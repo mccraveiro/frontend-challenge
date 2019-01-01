@@ -1,4 +1,4 @@
-const Component = require('./component')
+const { Component } = require('./custom-framework')
 const App = require('./app')
 
 test('instance of Component', () => {
