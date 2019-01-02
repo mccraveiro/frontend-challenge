@@ -2,24 +2,22 @@ const { Component, createElement } = require('./custom-framework')
 const Header = require('./header')
 const Search = require('./search')
 const List = require('./list')
+const rawData = require('./dataset.json')
 
-const rawData = [
-  'Fluffy',
-  'Honey',
-]
+const data = rawData.map((stats) => stats.name)
 
 class App extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      data: rawData,
+      data: data,
     }
   }
 
   handleSearchInput (event) {
     const value = event.target.value
-    this.state.data = rawData.filter(name => name.startsWith(value))
+    this.state.data = data.filter(name => name.startsWith(value))
   }
 
   render () {

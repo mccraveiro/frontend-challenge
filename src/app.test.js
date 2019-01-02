@@ -19,6 +19,6 @@ test('renders three children', () => {
 test('handleSearchInput updates the state', () => {
   const app = new App()
   app.handleSearchInput({ target: { value: 'H' }})
-  expect(app.state.data[0]).toBe('Honey')
+  expect(app.state.data[0]).toBe('Henry')
 })
 
