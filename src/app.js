@@ -4,19 +4,26 @@ const Search = require('./search')
 const List = require('./list')
 
 const handleSearchInput = (e) => console.log(e)
-const data = [
-  'Fluffy',
-  'Honey',
-]
 
 class App extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      data: [
+        'Fluffy',
+        'Honey',
+      ]
+    }
+  }
+
   render () {
     return createElement(
       'div',
       {},
       createElement(Header),
       createElement(Search, { onchange: handleSearchInput }),
-      createElement(List, { data })
+      createElement(List, { data: this.state.data })
     )
   }
 }
