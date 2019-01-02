@@ -1,15 +1,6 @@
 /* eslint-disable no-param-reassign */
 const Component = require('./component')
-
-function updateDOMProperties(dom, props) {
-  if (props.className) {
-    dom.className = props.className
-  } else {
-    dom.removeAttribute('class')
-  }
-
-  dom.onchange = props.onchange
-}
+const updateDom = require('./updateDom')
 
 function createInstance(element) {
   if (typeof element === 'string') {
@@ -25,7 +16,7 @@ function createInstance(element) {
     const props = element.props || {}
     const children = (props.children || []).map(createInstance)
 
-    updateDOMProperties(dom, props)
+    updateDom(dom, props)
     children.forEach(child => dom.appendChild(child.dom))
 
     return {
@@ -81,7 +72,7 @@ function reconcile(element, parent, previousInstance) {
   }
 
   if (typeof element.type === 'string') {
-    updateDOMProperties(previousInstance.dom, element.props)
+    updateDom(previousInstance.dom, element.props)
     // eslint-disable-next-line no-use-before-define
     previousInstance.children = reconcileChildren(element, previousInstance)
     previousInstance.element = element
