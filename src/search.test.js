@@ -11,6 +11,7 @@ test('has type of input', () => {
 })
 
 test('receive onchange event listener', () => {
+  // eslint-disable-next-line no-console
   const onchange = () => console.log('Hello')
   const search = Search({
     onchange,

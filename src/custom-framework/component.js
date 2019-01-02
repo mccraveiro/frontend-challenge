@@ -1,5 +1,5 @@
 class Component {
-  constructor (props = {}) {
+  constructor(props = {}) {
     this.props = props
     this.state = {}
   }

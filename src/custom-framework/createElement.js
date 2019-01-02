@@ -1,4 +1,4 @@
-function createElement (type, properties, ...children) {
+function createElement(type, properties, ...children) {
   const props = {
     ...properties,
     children,

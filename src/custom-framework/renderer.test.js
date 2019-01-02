@@ -51,6 +51,7 @@ test('write elements recursively', () => {
 test('attach onchange event listener', () => {
   document.body.innerHTML = ''
 
+  // eslint-disable-next-line no-console
   const onchange = () => console.log('Hello world')
 
   const element = createElement('input', { onchange })
@@ -62,7 +63,7 @@ test('attach onchange event listener', () => {
 test('render custom element', () => {
   document.body.innerHTML = ''
 
-  function customElement () {
+  function customElement() {
     return createElement('div')
   }
 
@@ -74,7 +75,7 @@ test('render custom element', () => {
 test('render custom element with props', () => {
   document.body.innerHTML = ''
 
-  function customElement (props) {
+  function customElement(props) {
     return createElement(props.tag)
   }
 
@@ -86,7 +87,7 @@ test('render custom element with props', () => {
 test('render custom element with text children', () => {
   document.body.innerHTML = ''
 
-  function customElement (props) {
+  function customElement(props) {
     return createElement(props.tag, {}, ...props.children)
   }
 
@@ -98,16 +99,16 @@ test('render custom element with text children', () => {
 test('render custom element with custom children', () => {
   document.body.innerHTML = ''
 
-  function customChild (props) {
+  function customChild(props) {
     return createElement('li', {}, ...props.children)
   }
 
-  function customElement () {
+  function customElement() {
     return createElement(
       'ul',
       {},
       createElement(customChild, {}, 'Foo'),
-      createElement(customChild, {}, 'Bar')
+      createElement(customChild, {}, 'Bar'),
     )
   }
 
@@ -120,7 +121,8 @@ test('render custom component', () => {
   document.body.innerHTML = ''
 
   class customComponent extends Component {
-    render () {
+    // eslint-disable-next-line class-methods-use-this
+    render() {
       return createElement('div')
     }
   }
@@ -145,14 +147,14 @@ test('render component state change', (done) => {
   document.body.innerHTML = ''
 
   class customComponent extends Component {
-    constructor (props) {
+    constructor(props) {
       super(props)
       this.state = {
-        text: 'Hello world'
+        text: 'Hello world',
       }
     }
 
-    render () {
+    render() {
       const element = createElement('div', {}, this.state.text)
 
       // For testing purpose
@@ -226,6 +228,7 @@ test('do not re-render div but update text', () => {
 
   const finalDOM = document.body.firstChild
 
+  expect(initialDOM.isSameNode(finalDOM)).toBe(true)
   expect(document.body.innerHTML).toBe('<div>Foo</div>')
 })
 

@@ -1,12 +1,12 @@
 const { createElement } = require('./custom-framework')
 
-function List (props = {}) {
+function List(props = {}) {
   const data = props.data || []
 
   return createElement(
     'ul',
     {},
-    ...data.map(child => createElement('li', {}, child))
+    ...data.map(child => createElement('li', {}, child)),
   )
 }
 
