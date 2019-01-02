@@ -5,7 +5,8 @@
     "build": "webpack",
     "dataset": "./scripts/parse-dataset.js",
     "lint": "eslint src",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "author": "Mateus Craveiro <mccraveiro@gmail.com>",
   "license": "MIT",
