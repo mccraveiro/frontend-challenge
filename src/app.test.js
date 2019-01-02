@@ -16,3 +16,9 @@ test('renders three children', () => {
   expect(app.render().props.children.length).toBe(3)
 })
 
+test('handleSearchInput updates the state', () => {
+  const app = new App()
+  app.handleSearchInput({ target: { value: 'H' }})
+  expect(app.state.data[0]).toBe('Honey')
+})
+

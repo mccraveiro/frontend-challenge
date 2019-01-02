@@ -3,18 +3,23 @@ const Header = require('./header')
 const Search = require('./search')
 const List = require('./list')
 
-const handleSearchInput = (e) => console.log(e)
+const rawData = [
+  'Fluffy',
+  'Honey',
+]
 
 class App extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      data: [
-        'Fluffy',
-        'Honey',
-      ]
+      data: rawData,
     }
+  }
+
+  handleSearchInput (event) {
+    const value = event.target.value
+    this.state.data = rawData.filter(name => name.startsWith(value))
   }
 
   render () {
@@ -22,7 +27,7 @@ class App extends Component {
       'div',
       {},
       createElement(Header),
-      createElement(Search, { onchange: handleSearchInput }),
+      createElement(Search, { onchange: this.handleSearchInput.bind(this) }),
       createElement(List, { data: this.state.data })
     )
   }
