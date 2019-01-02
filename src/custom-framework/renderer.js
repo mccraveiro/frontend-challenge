@@ -33,7 +33,6 @@ function createInstance (element) {
   }
 
   const props = element.props || {}
-  const children = props.children || []
   const component = new element.type(props)
   const componentInstance = component instanceof Component
     ? component
@@ -41,12 +40,13 @@ function createInstance (element) {
   const childElement = componentInstance
     ? component.render()
     : component
-  const dom = createInstance(childElement).dom
+  const childInstance = createInstance(childElement)
+  const dom = childInstance.dom
 
   return {
     element,
     dom,
-    children,
+    childInstance,
     componentInstance,
   }
 }
@@ -63,16 +63,32 @@ function reconcile (element, parent, previousInstance) {
     previousInstance.dom.textContent = element
     previousInstance.element = element
     return previousInstance
-  } else if (previousInstance.element.type === element.type) {
+  } else if (previousInstance.element.type !== element.type) {
+    const instance = createInstance(element)
+    parent.replaceChild(instance.dom, previousInstance.dom)
+    parent.appendChild(instance.dom)
+    return instance
+  } else if (typeof element.type === 'string') {
     updateDOMProperties(previousInstance.dom, element.props)
     previousInstance.children = reconcileChildren(element, previousInstance)
     previousInstance.element = element
     return previousInstance
   } else {
-    const instance = createInstance(element)
-    parent.replaceChild(instance.dom, previousInstance.dom)
-    parent.appendChild(instance.dom)
-    return instance
+    let childElement
+
+    if (previousInstance.componentInstance) {
+      previousInstance.componentInstance.props = element.props
+      childElement = previousInstance.componentInstance.render()
+    } else {
+      childElement = element.type(element.props)
+    }
+
+    const oldChildInstance = previousInstance.childInstance
+    const childInstance = reconcile(childElement, parent, oldChildInstance)
+    previousInstance.dom = childInstance.dom
+    previousInstance.childInstance = childInstance
+    previousInstance.element = element
+    return previousInstance
   }
 }
 
@@ -86,7 +102,10 @@ function reconcileChildren (element, previousInstance) {
     const instanceChild = instanceChildren[i]
     const elementChild = elementChildren[i]
     const child = reconcile(elementChild, previousInstance.dom, instanceChild)
-    reconciliatedChildren.push(child)
+
+    if (child) {
+      reconciliatedChildren.push(child)
+    }
   }
 
   return reconciliatedChildren

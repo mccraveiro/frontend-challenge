@@ -140,6 +140,39 @@ test('schedule next animation frame re-render', () => {
   expect(window.requestAnimationFrame).toBeCalled()
 })
 
+
+test('render component state change', (done) => {
+  document.body.innerHTML = ''
+
+  class customComponent extends Component {
+    constructor (props) {
+      super(props)
+      this.state = {
+        text: 'Hello world'
+      }
+    }
+
+    render () {
+      const element = createElement('div', {}, this.state.text)
+
+      // For testing purpose
+      this.state.text = 'Foo'
+
+      return element
+    }
+  }
+
+  jest.spyOn(window, 'requestAnimationFrame')
+    .mockImplementation((callback) => {
+      window.requestAnimationFrame.mockRestore()
+      callback()
+      expect(document.body.innerHTML).toBe('<div>Foo</div>')
+      done()
+    })
+
+  Renderer(createElement(customComponent))
+})
+
 // Reconciliation
 test('do not remove siblings', () => {
   document.body.innerHTML = ''
