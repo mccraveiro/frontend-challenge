@@ -1,5 +1,28 @@
 const List = require('./list')
 
+const data = [
+  {
+    position: 1,
+    name: 'Fluffy',
+    count: 7652,
+    gender: {
+      male: 36,
+      female: 55,
+      unknown: 9,
+    },
+  },
+  {
+    position: 2,
+    name: 'Honey',
+    count: 6725,
+    gender: {
+      male: 10,
+      female: 80,
+      unknown: 10,
+    },
+  },
+]
+
 test('returns an object', () => {
   const list = List()
   expect(typeof list).toBe('object')
@@ -11,21 +34,13 @@ test('has type ul', () => {
 })
 
 test('return 2 children', () => {
-  const list = List({
-    data: [
-      'foo',
-      'bar',
-    ],
-  })
+  const list = List({ data })
   expect(list.props.children.length).toBe(2)
 })
 
-test('return "foo" as item', () => {
-  const list = List({
-    data: [
-      'foo',
-      'bar',
-    ],
-  })
-  expect(list.props.children[0].props.children[0]).toBe('foo')
+test('return "Fluffy" as item', () => {
+  const list = List({ data })
+  expect(JSON.stringify(list.props.children[0])).toEqual(
+    expect.stringContaining('Fluffy')
+  )
 })

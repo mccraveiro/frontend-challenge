@@ -1,4 +1,5 @@
 const { createElement } = require('./custom-framework')
+const Item = require('./item')
 
 function List(props = {}) {
   const data = props.data || []
@@ -6,7 +7,7 @@ function List(props = {}) {
   return createElement(
     'ul',
     {},
-    ...data.map(child => createElement('li', {}, child)),
+    ...data.map(Item),
   )
 }
 

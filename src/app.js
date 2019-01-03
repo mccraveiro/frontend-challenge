@@ -2,9 +2,7 @@ const { Component, createElement } = require('./custom-framework')
 const Header = require('./header')
 const Search = require('./search')
 const List = require('./list')
-const rawData = require('./dataset.json')
-
-const data = rawData.map(stats => stats.name)
+const data = require('./dataset.json')
 
 class App extends Component {
   constructor(props) {
@@ -19,7 +17,7 @@ class App extends Component {
 
   handleSearchInput(event) {
     const { value } = event.target
-    this.state.data = data.filter(name => name.startsWith(value))
+    this.state.data = data.filter(dog => dog.name.startsWith(value))
   }
 
   render() {
