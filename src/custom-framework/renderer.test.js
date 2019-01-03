@@ -48,18 +48,6 @@ test('write elements recursively', () => {
   expect(document.body.innerHTML).toBe('<ul><li><a>Hello world</a></li></ul>')
 })
 
-test('attach onchange event listener', () => {
-  document.body.innerHTML = ''
-
-  // eslint-disable-next-line no-console
-  const onchange = () => console.log('Hello world')
-
-  const element = createElement('input', { onchange })
-  Renderer(element)
-
-  expect(document.body.firstChild.onchange).toBe(onchange)
-})
-
 test('render custom element', () => {
   document.body.innerHTML = ''
 
