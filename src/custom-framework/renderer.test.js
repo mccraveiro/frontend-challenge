@@ -283,3 +283,32 @@ test('do not re-render div but remove children', () => {
   expect(initialDOM.isSameNode(finalDOM)).toBe(true)
   expect(document.body.innerHTML).toBe('<div></div>')
 })
+
+test('do not re-render text', () => {
+  const initialDOM = document.createElement('div')
+  const child = document.createTextNode('Hello world')
+  const textContentSetter = jest.fn()
+
+  Object.defineProperty(child, 'textContent', {
+    set: textContentSetter,
+  })
+
+  initialDOM.appendChild(child)
+  const element = createElement('div', {}, 'Hello world')
+
+  document.body.innerHTML = ''
+  document.body.appendChild(initialDOM)
+
+  Renderer(element, document.body, {
+    element,
+    dom: initialDOM,
+    children: [{
+      element: 'Hello world',
+      dom: child,
+      children: [],
+    }],
+  })
+
+  expect(textContentSetter).not.toHaveBeenCalled()
+  expect(document.body.innerHTML).toBe('<div>Hello world</div>')
+})

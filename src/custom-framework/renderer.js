@@ -59,8 +59,11 @@ function reconcile(element, parent, previousInstance) {
   }
 
   if (typeof previousInstance.element === 'string' && typeof element === 'string') {
-    previousInstance.dom.textContent = element
-    previousInstance.element = element
+    if (previousInstance.element !== element) {
+      previousInstance.dom.textContent = element
+      previousInstance.element = element
+    }
+
     return previousInstance
   }
 
