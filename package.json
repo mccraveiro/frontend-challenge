@@ -5,17 +5,20 @@
     "build": "webpack",
     "dataset": "./scripts/parse-dataset.js",
     "lint": "eslint src",
+    "start": "webpack-dev-server --open",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
   "author": "Mateus Craveiro <mccraveiro@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "copy-webpack-plugin": "^4.6.0",
     "eslint": "^5.11.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "jest": "^23.6.0",
     "webpack": "^4.28.3",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.14"
   }
 }
