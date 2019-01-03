@@ -1,18 +1,18 @@
 .app {
+  font-family: "SF Pro Text", Helvetica;
+  margin: 32px auto;
   width: 600px;
-  margin: 32px auto
 }
 
 .header {
   color: #3B4056;
-  font-family: "SF Pro Text", Helvetica;
   font-size: 24px;
   letter-spacing: 0;
   text-align: center;
 }
 
 .search {
-  margin: 32px auto 0;
+  margin: 32px auto 24px;
   position: relative;
   width: 564px;
 }
@@ -35,7 +35,6 @@
   border: 2px solid #E1E4F2;
   border-radius: 28px;
   box-sizing: border-box;
-  font-family: "SF Pro Text", Helvetica;
   font-size: 18px;
   height: 56px;
   outline: none;
@@ -48,36 +47,62 @@
 }
 
 .item {
-  border: 1px solid #e1e4f2;
-  border-radius: 2px;
+  background-color: #FFF;
+  border: 1px solid #E1E4F2;
+  border-radius: 3px;
+  box-sizing: border-box;
   display: grid;
-  grid-column-gap: 15px;
-  grid-template-columns: [position] 60px [title] auto 40px 50px 70px;
+  grid-column-gap: 16px;
+  grid-template-columns: [position] 60px [title] auto 48px 68px 80px;
   grid-template-rows: auto;
-  margin: 16px;
-  padding: 15px;
-  width: 560px;
+  margin: 16px 18px;
+  padding: 16px;
+  width: 564px;
 }
 
 .item-position {
-  color: white;
-  background: #56d1cd;
+  color: #FFF;
+  background: #56D1CD;
   display: block;
-  font-size: 15px;
+  font-size: 21px;
   line-height: 60px;
   text-align: center;
 }
 
 .item-name {
+  color: #3B4056;
+  display: block;
+  font-size: 20px;
   grid-column-start: title;
   grid-row-start: 1;
-  display: block;
-  margin-top: 0;
+  margin-top: 4px;
 }
 
 .item-count {
+  color: #7A7F97;
+  display: block;
+  font-size: 16px;
   grid-column-start: title;
   grid-row-start: 1;
-  display: block;
-  margin-top: 40px;
+  margin-top: 35px;
+}
+
+.item-male::first-line,
+.item-female::first-line,
+.item-unknown::first-line {
+  color: #3B4056;
+  font-size: 18px;
+}
+
+.item-male,
+.item-female,
+.item-unknown {
+  color: #7A7F97;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.item-male,
+.item-female {
+  padding-right: 8px;
 }

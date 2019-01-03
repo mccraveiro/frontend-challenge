@@ -51,16 +51,19 @@ test('returns male count', () => {
   const item = Item(fakeDog)
   expect(item.props.children[3].type).toBe('span')
   expect(item.props.children[3].props.children[0]).toBe('Male 36%')
+  expect(item.props.children[3].props.className).toBe('item-male')
 })
 
 test('returns female count', () => {
   const item = Item(fakeDog)
   expect(item.props.children[4].type).toBe('span')
   expect(item.props.children[4].props.children[0]).toBe('Female 55%')
+  expect(item.props.children[4].props.className).toBe('item-female')
 })
 
 test('returns unknown count', () => {
   const item = Item(fakeDog)
   expect(item.props.children[5].type).toBe('span')
   expect(item.props.children[5].props.children[0]).toBe('Unknown 9%')
+  expect(item.props.children[5].props.className).toBe('item-unknown')
 })

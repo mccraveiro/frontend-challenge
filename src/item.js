@@ -9,9 +9,9 @@ function Item(props = {}) {
     createElement('span', { className: 'item-position' }, props.position.toString()),
     createElement('h2', { className: 'item-name' }, props.name),
     createElement('span', { className: 'item-count' }, `${props.count} dogs`),
-    createElement('span', {}, `Male ${props.gender.male}%`),
-    createElement('span', {}, `Female ${props.gender.female}%`),
-    createElement('span', {}, `Unknown ${props.gender.unknown}%`),
+    createElement('span', { className: 'item-male' }, `Male ${props.gender.male}%`),
+    createElement('span', { className: 'item-female' }, `Female ${props.gender.female}%`),
+    createElement('span', { className: 'item-unknown' }, `Unknown ${props.gender.unknown}%`),
   )
 }
 
