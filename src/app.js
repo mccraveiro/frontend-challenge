@@ -17,7 +17,8 @@ class App extends Component {
 
   handleSearchInput(event) {
     const { value } = event.target
-    this.state.data = data.filter(dog => dog.name.startsWith(value))
+    const searchTerm = new RegExp(value, 'i')
+    this.state.data = data.filter(dog => searchTerm.test(dog.name))
   }
 
   render() {
