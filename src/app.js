@@ -13,6 +13,8 @@ class App extends Component {
     this.state = {
       data,
     }
+
+    this.handleSearchInput = this.handleSearchInput.bind(this)
   }
 
   handleSearchInput(event) {
@@ -25,7 +27,7 @@ class App extends Component {
       'div',
       {},
       createElement(Header),
-      createElement(Search, { onchange: this.handleSearchInput.bind(this) }),
+      createElement(Search, { onchange: this.handleSearchInput }),
       createElement(List, { data: this.state.data }),
     )
   }

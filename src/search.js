@@ -5,6 +5,7 @@ function Search(props = {}) {
     'input',
     {
       onchange: props.onchange,
+      placeholder: 'Search by name',
     },
   )
 }
