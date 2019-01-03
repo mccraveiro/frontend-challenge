@@ -2,11 +2,16 @@ const { createElement } = require('./custom-framework')
 
 function Search(props = {}) {
   return createElement(
-    'input',
-    {
-      onchange: props.onchange,
-      placeholder: 'Search by name',
-    },
+    'div',
+    { className: 'search' },
+    createElement(
+      'input',
+      {
+        className: 'search-input',
+        placeholder: 'Search by name',
+        onchange: props.onchange,
+      },
+    ),
   )
 }
 
