@@ -16,7 +16,7 @@ function createInstance(element) {
     const props = element.props || {}
     const children = (props.children || []).map(createInstance)
 
-    updateDom(dom, props)
+    updateDom(dom, props, {})
     children.forEach(child => dom.appendChild(child.dom))
 
     return {
@@ -75,7 +75,7 @@ function reconcile(element, parent, previousInstance) {
   }
 
   if (typeof element.type === 'string') {
-    updateDom(previousInstance.dom, element.props)
+    updateDom(previousInstance.dom, element.props, previousInstance.element.props)
     // eslint-disable-next-line no-use-before-define
     previousInstance.children = reconcileChildren(element, previousInstance)
     previousInstance.element = element

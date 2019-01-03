@@ -11,12 +11,16 @@ test('add className', () => {
 
 test('remove className', () => {
   const dom = document.createElement('div')
-  dom.className = 'foo'
+  const removeAttribute = jest.fn()
+  dom.removeAttribute = removeAttribute
   const props = {}
+  const prevProps = {
+    className: 'foo',
+  }
 
-  updateDom(dom, props)
+  updateDom(dom, props, prevProps)
 
-  expect(dom.className).toBe('')
+  expect(removeAttribute).toHaveBeenCalledWith('class')
 })
 
 test('add multiple attributes', () => {
@@ -43,5 +47,17 @@ test('add onchange listener', () => {
 
   updateDom(dom, props)
 
-  expect(dom.addEventListener).toHaveBeenCalledWith('onchange', onchange)
+  expect(dom.addEventListener).toHaveBeenCalledWith('change', onchange)
+})
+
+test('remove existing listeners', () => {
+  const onchange = () => {}
+  const dom = document.createElement('input')
+  dom.removeEventListener = jest.fn()
+  const props = {}
+  const prevProps = { onchange }
+
+  updateDom(dom, props, prevProps)
+
+  expect(dom.removeEventListener).toHaveBeenCalledWith('change', onchange)
 })

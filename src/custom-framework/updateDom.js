@@ -1,3 +1,13 @@
+const objectify = (object, [key, value]) => ({ ...object, [key]: value })
+
+function parseEventListeners(props) {
+  return Object
+    .entries(props)
+    .filter(([, value]) => typeof value === 'function')
+    .map(([key, value]) => [key.slice(2), value])
+    .reduce(objectify, {})
+}
+
 function setAttribute(dom, name, value) {
   const key = name === 'className'
     ? 'class'
@@ -14,27 +24,28 @@ function removeAttribute(dom, name) {
   dom.removeAttribute(key)
 }
 
-function updateDom(dom, props) {
-  const eventListeners = { onchange: props.onchange }
+function updateDom(dom, props, prevProps = {}) {
+  const prevEventListeners = parseEventListeners(prevProps)
+  const eventListeners = parseEventListeners(props)
   const attributes = { ...props }
   delete attributes.children
   delete attributes.onchange
 
-  Array
-    .from(dom.attributes)
-    .forEach((attribute) => {
-      if (attributes[attribute.name] && attributes[attribute.name] === attribute.value) {
-        delete attributes[attribute.name]
+  Object
+    .entries(prevProps)
+    .forEach(([attributeName, attributeValue]) => {
+      if (attributes[attributeName] && attributes[attributeName] === attributeValue) {
+        delete attributes[attributeName]
         return
       }
 
-      if (attributes[attribute.name]) {
-        setAttribute(dom, attribute.name, attributes[attribute.name])
-        delete attributes[attribute.name]
+      if (attributes[attributeName]) {
+        setAttribute(dom, attributeName, attributes[attributeName])
+        delete attributes[attributeName]
         return
       }
 
-      removeAttribute(dom, attribute.name)
+      removeAttribute(dom, attributeName)
     })
 
   Object
@@ -44,9 +55,27 @@ function updateDom(dom, props) {
     })
 
   Object
+    .entries(prevEventListeners)
+    .forEach(([eventName, eventListener]) => {
+      if (eventListeners[eventName] && eventListeners[eventName] === eventListener) {
+        delete eventListeners[eventName]
+        return
+      }
+
+      if (eventListeners[eventName]) {
+        dom.removeEventListener(eventName, eventListener)
+        dom.addEventListener(eventName, eventListeners[eventName])
+        delete eventListeners[eventName]
+        return
+      }
+
+      dom.removeEventListener(eventName, eventListener)
+    })
+
+  Object
     .entries(eventListeners)
-    .forEach(([name, fn]) => {
-      dom.addEventListener(name, fn)
+    .forEach(([eventName, eventListener]) => {
+      dom.addEventListener(eventName, eventListener)
     })
 }
 
