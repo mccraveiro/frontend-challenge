@@ -24,7 +24,7 @@ class App extends Component {
   render() {
     return createElement(
       'div',
-      {},
+      { className: 'app' },
       createElement(Header),
       createElement(Search, { onchange: this.handleSearchInput }),
       createElement(List, { data: this.state.data }),

@@ -11,6 +11,11 @@ test('renders an object', () => {
   expect(typeof app.render()).toBe('object')
 })
 
+test('returns class name', () => {
+  const app = new App()
+  expect(app.render().props.className).toBe('app')
+})
+
 test('renders three children', () => {
   const app = new App()
   expect(app.render().props.children.length).toBe(3)
