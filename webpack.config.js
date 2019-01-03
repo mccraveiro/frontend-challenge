@@ -12,6 +12,9 @@ module.exports = {
     contentBase: './dist',
   },
   plugins: [
-    new CopyWebpackPlugin(['src/index.html'])
+    new CopyWebpackPlugin([
+      'src/index.html',
+      'src/index.css',
+    ])
   ]
 }

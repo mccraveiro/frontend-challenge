@@ -1,0 +1,38 @@
+.list {
+  padding: 0;
+}
+
+.item {
+  border: 1px solid #e1e4f2;
+  border-radius: 2px;
+  display: grid;
+  grid-column-gap: 15px;
+  grid-template-columns: [position] 60px [title] auto 40px 50px 70px;
+  grid-template-rows: auto;
+  margin: 16px;
+  padding: 15px;
+  width: 560px;
+}
+
+.item-position {
+  color: white;
+  background: #56d1cd;
+  display: block;
+  font-size: 15px;
+  line-height: 60px;
+  text-align: center;
+}
+
+.item-name {
+  grid-column-start: title;
+  grid-row-start: 1;
+  display: block;
+  margin-top: 0;
+}
+
+.item-count {
+  grid-column-start: title;
+  grid-row-start: 1;
+  display: block;
+  margin-top: 40px;
+}

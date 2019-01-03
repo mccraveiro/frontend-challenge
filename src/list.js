@@ -6,7 +6,9 @@ function List(props = {}) {
 
   return createElement(
     'ul',
-    {},
+    {
+      className: 'list',
+    },
     ...data.map(Item),
   )
 }

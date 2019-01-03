@@ -21,22 +21,30 @@ test('returns a list item', () => {
   expect(item.type).toBe('li')
 })
 
+test('returns item class', () => {
+  const item = Item(fakeDog)
+  expect(item.props.className).toBe('item')
+})
+
 test('returns dog position', () => {
   const item = Item(fakeDog)
   expect(item.props.children[0].type).toBe('span')
   expect(item.props.children[0].props.children[0]).toBe('1')
+  expect(item.props.children[0].props.className).toBe('item-position')
 })
 
 test('returns dog name', () => {
   const item = Item(fakeDog)
   expect(item.props.children[1].type).toBe('h2')
   expect(item.props.children[1].props.children[0]).toBe('Fluffy')
+  expect(item.props.children[1].props.className).toBe('item-name')
 })
 
 test('returns dog count', () => {
   const item = Item(fakeDog)
   expect(item.props.children[2].type).toBe('span')
   expect(item.props.children[2].props.children[0]).toBe('7652 dogs')
+  expect(item.props.children[2].props.className).toBe('item-count')
 })
 
 test('returns male count', () => {

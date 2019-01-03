@@ -33,6 +33,11 @@ test('has type ul', () => {
   expect(list.type).toBe('ul')
 })
 
+test('has class name', () => {
+  const list = List()
+  expect(list.props.className).toBe('list')
+})
+
 test('return 2 children', () => {
   const list = List({ data })
   expect(list.props.children.length).toBe(2)
@@ -41,6 +46,6 @@ test('return 2 children', () => {
 test('return "Fluffy" as item', () => {
   const list = List({ data })
   expect(JSON.stringify(list.props.children[0])).toEqual(
-    expect.stringContaining('Fluffy')
+    expect.stringContaining('Fluffy'),
   )
 })
