@@ -9,7 +9,7 @@ function Search(props = {}) {
       {
         className: 'search-input',
         placeholder: 'Search by name',
-        onchange: props.onchange,
+        onkeyup: props.onkeyup,
       },
     ),
   )

@@ -25,11 +25,11 @@ test('returns input with class', () => {
   expect(search.props.children[0].props.className).toBe('search-input')
 })
 
-test('returns input with onchange event listener', () => {
+test('returns input with onkeyup event listener', () => {
   // eslint-disable-next-line no-console
-  const onchange = () => console.log('Hello')
+  const onkeyup = () => console.log('Hello')
   const search = Search({
-    onchange,
+    onkeyup,
   })
-  expect(search.props.children[0].props.onchange).toBe(onchange)
+  expect(search.props.children[0].props.onkeyup).toBe(onkeyup)
 })
