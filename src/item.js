@@ -12,6 +12,9 @@ function Item(props = {}) {
     createElement('span', { className: 'item-male' }, `Male ${props.gender.male}%`),
     createElement('span', { className: 'item-female' }, `Female ${props.gender.female}%`),
     createElement('span', { className: 'item-unknown' }, `Unknown ${props.gender.unknown}%`),
+    createElement('hr'),
+    createElement('h3', { className: 'item-top-breeds-title' }, 'Top breeds'),
+    ...props.breeds.map(breed => createElement('h4', { className: 'item-breed-name' }, breed.name)),
   )
 }
 

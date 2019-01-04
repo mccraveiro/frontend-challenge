@@ -53,8 +53,9 @@
   box-sizing: border-box;
   display: grid;
   grid-column-gap: 16px;
+  grid-row-gap: 16px;
   grid-template-columns: [position] 60px [title] auto 48px 68px 80px;
-  grid-template-rows: auto;
+  grid-template-rows: 60px 1px auto;
   margin: 16px 18px;
   padding: 16px;
   width: 564px;
@@ -105,4 +106,30 @@
 .item-male,
 .item-female {
   padding-right: 8px;
+}
+
+.item hr {
+  grid-column-start: 1;
+  grid-column-end: 6;
+  width: calc(100% + 32px);
+  margin: 0 0 0 -16px;
+  border: 0;
+  border-top: 1px solid #E1E4F2;
+}
+
+.item-top-breeds-title {
+  color: #3B4056;
+  font-size: 16px;
+  grid-column-start: 1;
+  grid-column-end: 6;
+  margin: 0;
+}
+
+.item-breed-name {
+  color: #3B4056;
+  font-size: 14px;
+  font-weight: normal;
+  grid-column-start: 1;
+  grid-column-end: 6;
+  margin: 0;
 }

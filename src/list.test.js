@@ -10,6 +10,28 @@ const data = [
       female: 55,
       unknown: 9,
     },
+    breeds: [
+      {
+        name: 'Golden Retriever',
+        count: 3432,
+        histogram: 100,
+      },
+      {
+        name: 'Unknown',
+        count: 2298,
+        histogram: 66,
+      },
+      {
+        name: 'Pug',
+        count: 1103,
+        histogram: 33,
+      },
+      {
+        name: 'Cocker Spaniel',
+        count: 819,
+        histogram: 25,
+      },
+    ],
   },
   {
     position: 2,
@@ -20,6 +42,28 @@ const data = [
       female: 80,
       unknown: 10,
     },
+    breeds: [
+      {
+        name: 'Golden Retriever',
+        count: 2376,
+        histogram: 100,
+      },
+      {
+        name: 'Yorkshire Terrier',
+        count: 2032,
+        histogram: 66,
+      },
+      {
+        name: 'Pug',
+        count: 1103,
+        histogram: 33,
+      },
+      {
+        name: 'Cocker Spaniel',
+        count: 819,
+        histogram: 25,
+      },
+    ],
   },
 ]
 
