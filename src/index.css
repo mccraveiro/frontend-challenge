@@ -48,17 +48,20 @@
 
 .item {
   background-color: #FFF;
-  border: 1px solid #E1E4F2;
-  border-radius: 3px;
   box-sizing: border-box;
   display: grid;
-  grid-column-gap: 16px;
-  grid-row-gap: 16px;
-  grid-template-columns: [position] 60px [title] auto 48px 68px 80px;
-  grid-template-rows: 60px 1px auto;
+  grid-template-rows: 92px auto;
   margin: 16px 18px;
-  padding: 16px;
   width: 564px;
+}
+
+.item header {
+  border: 1px solid #E1E4F2;
+  border-radius: 3px 3px 0 0;
+  display: grid;
+  grid-column-gap: 16px;
+  grid-template-columns: [position] 60px [title] auto 48px 68px 80px;
+  padding: 16px;
 }
 
 .item-position {
@@ -108,28 +111,40 @@
   padding-right: 8px;
 }
 
-.item hr {
-  grid-column-start: 1;
-  grid-column-end: 6;
-  width: calc(100% + 32px);
-  margin: 0 0 0 -16px;
-  border: 0;
-  border-top: 1px solid #E1E4F2;
+.item table {
+  border: 1px solid #E1E4F2;
+  border-top: 0;
+  border-radius: 0 0 3px 3px;
+  padding: 16px;
 }
 
-.item-top-breeds-title {
+.item caption {
   color: #3B4056;
+  display: inline-block;
   font-size: 16px;
-  grid-column-start: 1;
-  grid-column-end: 6;
-  margin: 0;
+  font-weight: bold;
+  padding-bottom: 6px;
 }
 
-.item-breed-name {
+.item th {
   color: #3B4056;
   font-size: 14px;
   font-weight: normal;
-  grid-column-start: 1;
-  grid-column-end: 6;
-  margin: 0;
+  text-align: left;
+  padding: 6px 0;
+  width: 130px;
+}
+
+.item .histogram {
+  background-color: #98DFDE;
+  border-radius: 3px;
+  display: inline-block;
+  height: 6px;
+}
+
+.item tr td:last-child {
+  color: #3B4056;
+  font-size: 14px;
+  text-align: right;
+  width: 55px;
 }
