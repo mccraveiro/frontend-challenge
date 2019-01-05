@@ -1,5 +1,15 @@
 const objectify = (object, [key, value]) => ({ ...object, [key]: value })
 
+function parseAttributes(props) {
+  const eventListenersAndChildren = ([name, value]) => typeof value !== 'function'
+    && name !== 'children'
+
+  return Object
+    .entries(props)
+    .filter(eventListenersAndChildren)
+    .reduce(objectify, {})
+}
+
 function parseEventListeners(props) {
   return Object
     .entries(props)
@@ -27,12 +37,11 @@ function removeAttribute(dom, name) {
 function updateDom(dom, props, prevProps = {}) {
   const prevEventListeners = parseEventListeners(prevProps)
   const eventListeners = parseEventListeners(props)
-  const attributes = { ...props }
-  delete attributes.children
-  delete attributes.onchange
+  const prevAttributes = parseAttributes(prevProps)
+  const attributes = parseAttributes(props)
 
   Object
-    .entries(prevProps)
+    .entries(prevAttributes)
     .forEach(([attributeName, attributeValue]) => {
       if (attributes[attributeName] && attributes[attributeName] === attributeValue) {
         delete attributes[attributeName]
