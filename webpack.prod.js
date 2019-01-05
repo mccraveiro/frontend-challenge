@@ -12,6 +12,7 @@ module.exports = {
     new CopyWebpackPlugin([
       'src/index.html',
       'src/index.css',
+      'src/dataset.json',
     ])
   ]
 }

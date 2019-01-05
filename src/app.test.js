@@ -1,5 +1,20 @@
 const { Component } = require('./custom-framework')
 const App = require('./app')
+const dataset = require('./dataset.json')
+
+function mockFetch() {
+  const responseMock = {
+    status: 200,
+    json: () => Promise.resolve(dataset),
+  }
+  const fetchMock = () => Promise.resolve(responseMock)
+
+  global.fetch = jest.fn(fetchMock)
+}
+
+beforeAll(() => {
+  mockFetch()
+})
 
 test('instance of Component', () => {
   const app = new App()
@@ -23,6 +38,7 @@ test('renders three children', () => {
 
 test('handleSearchInput updates the state', () => {
   const app = new App()
+  app.state.data = dataset
   app.handleSearchInput({ target: { value: 'He' } })
-  expect(app.state.data[0].name).toBe('Henry')
+  expect(app.state.filteredData[0].name).toBe('Henry')
 })
