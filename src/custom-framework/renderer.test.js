@@ -146,7 +146,9 @@ test('render component state change', (done) => {
       const element = createElement('div', {}, this.state.text)
 
       // For testing purpose
-      this.state.text = 'Foo'
+      this.setState({
+        text: 'Foo',
+      })
 
       return element
     }

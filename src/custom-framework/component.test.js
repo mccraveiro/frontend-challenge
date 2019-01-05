@@ -23,3 +23,14 @@ test('instance stores state', () => {
   const component = new Component()
   expect(typeof component.state).toBe('object')
 })
+
+test('instance has setState', () => {
+  const component = new Component()
+  expect(typeof component.setState).toBe('function')
+})
+
+test('instance setState should change state', () => {
+  const component = new Component()
+  component.setState({ foo: 'bar' })
+  expect(component.state).toEqual({ foo: 'bar' })
+})

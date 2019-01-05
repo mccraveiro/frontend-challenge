@@ -19,7 +19,10 @@ class App extends Component {
 
   filterData() {
     const searchTerm = new RegExp(this.state.searchTerm, 'i')
-    this.state.filteredData = this.state.data.filter(dog => searchTerm.test(dog.name))
+    this.setState({
+      ...this.state,
+      filteredData: this.state.data.filter(dog => searchTerm.test(dog.name)),
+    })
   }
 
   loadData() {
@@ -31,8 +34,11 @@ class App extends Component {
         return response.json()
       })
       .then((dataset) => {
-        this.state.data = dataset
-        this.state.filteredData = dataset
+        this.setState({
+          ...this.state,
+          data: dataset,
+          filteredData: dataset,
+        })
         this.filterData()
       })
       .catch((error) => {
@@ -44,7 +50,10 @@ class App extends Component {
 
   handleSearchInput(event) {
     const { value } = event.target
-    this.state.searchTerm = value
+    this.setState({
+      ...this.state,
+      searchTerm: value,
+    })
     this.filterData()
   }
 
