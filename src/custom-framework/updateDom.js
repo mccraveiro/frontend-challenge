@@ -1,21 +1,27 @@
 const objectify = (object, [key, value]) => ({ ...object, [key]: value })
 
-function parseAttributes(props) {
+function parseAttributes(props, shouldObjectify = true) {
   const eventListenersAndChildren = ([name, value]) => typeof value !== 'function'
     && name !== 'children'
 
-  return Object
+  const attributes = Object
     .entries(props)
     .filter(eventListenersAndChildren)
-    .reduce(objectify, {})
+
+  return shouldObjectify
+    ? attributes.reduce(objectify, {})
+    : attributes
 }
 
-function parseEventListeners(props) {
-  return Object
+function parseEventListeners(props, shouldObjectify = true) {
+  const eventListeners = Object
     .entries(props)
     .filter(([, value]) => typeof value === 'function')
     .map(([key, value]) => [key.slice(2), value])
-    .reduce(objectify, {})
+
+  return shouldObjectify
+    ? eventListeners.reduce(objectify, {})
+    : eventListeners
 }
 
 function setAttribute(dom, name, value) {
@@ -35,27 +41,25 @@ function removeAttribute(dom, name) {
 }
 
 function updateDom(dom, props, prevProps = {}) {
-  const prevEventListeners = parseEventListeners(prevProps)
+  const prevEventListeners = parseEventListeners(prevProps, false)
   const eventListeners = parseEventListeners(props)
-  const prevAttributes = parseAttributes(prevProps)
+  const prevAttributes = parseAttributes(prevProps, false)
   const attributes = parseAttributes(props)
 
-  Object
-    .entries(prevAttributes)
-    .forEach(([attributeName, attributeValue]) => {
-      if (attributes[attributeName] && attributes[attributeName] === attributeValue) {
-        delete attributes[attributeName]
-        return
-      }
+  prevAttributes.forEach(([attributeName, attributeValue]) => {
+    if (attributes[attributeName] && attributes[attributeName] === attributeValue) {
+      delete attributes[attributeName]
+      return
+    }
 
-      if (attributes[attributeName]) {
-        setAttribute(dom, attributeName, attributes[attributeName])
-        delete attributes[attributeName]
-        return
-      }
+    if (attributes[attributeName]) {
+      setAttribute(dom, attributeName, attributes[attributeName])
+      delete attributes[attributeName]
+      return
+    }
 
-      removeAttribute(dom, attributeName)
-    })
+    removeAttribute(dom, attributeName)
+  })
 
   Object
     .entries(attributes)
@@ -63,23 +67,21 @@ function updateDom(dom, props, prevProps = {}) {
       setAttribute(dom, attributeName, attributeValue)
     })
 
-  Object
-    .entries(prevEventListeners)
-    .forEach(([eventName, eventListener]) => {
-      if (eventListeners[eventName] && eventListeners[eventName] === eventListener) {
-        delete eventListeners[eventName]
-        return
-      }
+  prevEventListeners.forEach(([eventName, eventListener]) => {
+    if (eventListeners[eventName] && eventListeners[eventName] === eventListener) {
+      delete eventListeners[eventName]
+      return
+    }
 
-      if (eventListeners[eventName]) {
-        dom.removeEventListener(eventName, eventListener)
-        dom.addEventListener(eventName, eventListeners[eventName])
-        delete eventListeners[eventName]
-        return
-      }
-
+    if (eventListeners[eventName]) {
       dom.removeEventListener(eventName, eventListener)
-    })
+      dom.addEventListener(eventName, eventListeners[eventName])
+      delete eventListeners[eventName]
+      return
+    }
+
+    dom.removeEventListener(eventName, eventListener)
+  })
 
   Object
     .entries(eventListeners)
