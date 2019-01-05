@@ -1,27 +1,21 @@
-const objectify = (object, [key, value]) => ({ ...object, [key]: value })
-
-function parseAttributes(props, shouldObjectify = true) {
-  const eventListenersAndChildren = ([name, value]) => typeof value !== 'function'
-    && name !== 'children'
+function parseAttributes(props) {
+  const eventListenersAndChildren = name => !name.startsWith('on') && name !== 'children'
 
   const attributes = Object
-    .entries(props)
+    .keys(props)
     .filter(eventListenersAndChildren)
 
-  return shouldObjectify
-    ? attributes.reduce(objectify, {})
-    : attributes
+  return new Set(attributes)
 }
 
-function parseEventListeners(props, shouldObjectify = true) {
-  const eventListeners = Object
-    .entries(props)
-    .filter(([, value]) => typeof value === 'function')
-    .map(([key, value]) => [key.slice(2), value])
+function parseEventListeners(props) {
+  const isEventListener = name => name.startsWith('on')
 
-  return shouldObjectify
-    ? eventListeners.reduce(objectify, {})
-    : eventListeners
+  const eventListeners = Object
+    .keys(props)
+    .filter(isEventListener)
+
+  return new Set(eventListeners)
 }
 
 function setAttribute(dom, name, value) {
@@ -41,53 +35,45 @@ function removeAttribute(dom, name) {
 }
 
 function updateDom(dom, props, prevProps = {}) {
-  const prevEventListeners = parseEventListeners(prevProps, false)
+  const prevEventListeners = parseEventListeners(prevProps)
   const eventListeners = parseEventListeners(props)
-  const prevAttributes = parseAttributes(prevProps, false)
+  const prevAttributes = parseAttributes(prevProps)
   const attributes = parseAttributes(props)
 
-  prevAttributes.forEach(([attributeName, attributeValue]) => {
-    if (attributes[attributeName] && attributes[attributeName] === attributeValue) {
-      delete attributes[attributeName]
+  prevAttributes.forEach((name) => {
+    if (props[name] === prevProps[name]) {
+      attributes.delete(name)
       return
     }
 
-    if (attributes[attributeName]) {
-      setAttribute(dom, attributeName, attributes[attributeName])
-      delete attributes[attributeName]
+    if (attributes.has(name)) {
+      setAttribute(dom, name, props[name])
+      attributes.delete(name)
       return
     }
 
-    removeAttribute(dom, attributeName)
+    removeAttribute(dom, name)
   })
 
-  Object
-    .entries(attributes)
-    .forEach(([attributeName, attributeValue]) => {
-      setAttribute(dom, attributeName, attributeValue)
-    })
+  attributes.forEach(name => setAttribute(dom, name, props[name]))
 
-  prevEventListeners.forEach(([eventName, eventListener]) => {
-    if (eventListeners[eventName] && eventListeners[eventName] === eventListener) {
-      delete eventListeners[eventName]
+  prevEventListeners.forEach((name) => {
+    if (props[name] === prevProps[name]) {
+      eventListeners.delete(name)
       return
     }
 
-    if (eventListeners[eventName]) {
-      dom.removeEventListener(eventName, eventListener)
-      dom.addEventListener(eventName, eventListeners[eventName])
-      delete eventListeners[eventName]
+    if (eventListeners.has(name)) {
+      dom.removeEventListener(name.slice(2), prevProps[name])
+      dom.addEventListener(name.slice(2), props[name])
+      eventListeners.delete(name)
       return
     }
 
-    dom.removeEventListener(eventName, eventListener)
+    dom.removeEventListener(name.slice(2), prevProps[name])
   })
 
-  Object
-    .entries(eventListeners)
-    .forEach(([eventName, eventListener]) => {
-      dom.addEventListener(eventName, eventListener)
-    })
+  eventListeners.forEach(name => dom.addEventListener(name.slice(2), props[name]))
 }
 
 module.exports = updateDom
