@@ -4,6 +4,7 @@
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "dataset": "./scripts/parse-dataset.js",
+    "deploy": "npm run build && gh-pages -d dist",
     "lint": "eslint src",
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "test": "jest",
@@ -16,6 +17,7 @@
     "eslint": "^5.11.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
+    "gh-pages": "^2.0.1",
     "jest": "^23.6.0",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.1.2",
