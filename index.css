@@ -1,0 +1,150 @@
+.app {
+  font-family: "SF Pro Text", Helvetica;
+  margin: 32px auto;
+  width: 600px;
+}
+
+.header {
+  color: #3B4056;
+  font-size: 24px;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.search {
+  margin: 32px auto 24px;
+  position: relative;
+  width: 564px;
+}
+
+.search::before {
+  background-image: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB3aWR0aD0iMjRweCIgaGVpZ2h0PSIyNHB4IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+DQogICAgPGcgaWQ9IlBhZ2UtMSIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+DQogICAgICAgIDxnIGlkPSJBcnRib2FyZC1Db3B5IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNDEuMDAwMDAwLCAtMTA5LjAwMDAwMCkiIGZpbGw9IiMzQjQwNTYiIGZpbGwtcnVsZT0ibm9uemVybyI+DQogICAgICAgICAgICA8ZyBpZD0iR3JvdXAtMTAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE4LjAwMDAwMCwgOTMuMDAwMDAwKSI+DQogICAgICAgICAgICAgICAgPGcgaWQ9ImJhc2VsaW5lLXNlYXJjaC0yNHB4IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxOS4wMDAwMDAsIDEyLjAwMDAwMCkiPg0KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMjAuNjY2NjY2NywxOC42NjY2NjY3IEwxOS42MTMzMzMzLDE4LjY2NjY2NjcgTDE5LjI0LDE4LjMwNjY2NjcgQzIwLjU0NjY2NjcsMTYuNzg2NjY2NyAyMS4zMzMzMzMzLDE0LjgxMzMzMzMgMjEuMzMzMzMzMywxMi42NjY2NjY3IEMyMS4zMzMzMzMzLDcuODggMTcuNDUzMzMzMyw0IDEyLjY2NjY2NjcsNCBDNy44OCw0IDQsNy44OCA0LDEyLjY2NjY2NjcgQzQsMTcuNDUzMzMzMyA3Ljg4LDIxLjMzMzMzMzMgMTIuNjY2NjY2NywyMS4zMzMzMzMzIEMxNC44MTMzMzMzLDIxLjMzMzMzMzMgMTYuNzg2NjY2NywyMC41NDY2NjY3IDE4LjMwNjY2NjcsMTkuMjQgTDE4LjY2NjY2NjcsMTkuNjEzMzMzMyBMMTguNjY2NjY2NywyMC42NjY2NjY3IEwyNS4zMzMzMzMzLDI3LjMyIEwyNy4zMiwyNS4zMzMzMzMzIEwyMC42NjY2NjY3LDE4LjY2NjY2NjcgWiBNMTIuNjY2NjY2NywxOC42NjY2NjY3IEM5LjM0NjY2NjY3LDE4LjY2NjY2NjcgNi42NjY2NjY2NywxNS45ODY2NjY3IDYuNjY2NjY2NjcsMTIuNjY2NjY2NyBDNi42NjY2NjY2Nyw5LjM0NjY2NjY3IDkuMzQ2NjY2NjcsNi42NjY2NjY2NyAxMi42NjY2NjY3LDYuNjY2NjY2NjcgQzE1Ljk4NjY2NjcsNi42NjY2NjY2NyAxOC42NjY2NjY3LDkuMzQ2NjY2NjcgMTguNjY2NjY2NywxMi42NjY2NjY3IEMxOC42NjY2NjY3LDE1Ljk4NjY2NjcgMTUuOTg2NjY2NywxOC42NjY2NjY3IDEyLjY2NjY2NjcsMTguNjY2NjY2NyBaIiBpZD0iU2hhcGUiPjwvcGF0aD4NCiAgICAgICAgICAgICAgICA8L2c+DQogICAgICAgICAgICA8L2c+DQogICAgICAgIDwvZz4NCiAgICA8L2c+DQo8L3N2Zz4=");
+  background-position: center;
+  background-repeat: no-repeat;
+  bottom: 12px;
+  content: "";
+  display: block;
+  height: 32px;
+  left: 18px;
+  position: absolute;
+  width: 32px;
+}
+
+.search-input {
+  background-color: #FFF;
+  border: 2px solid #E1E4F2;
+  border-radius: 28px;
+  box-sizing: border-box;
+  font-size: 18px;
+  height: 56px;
+  outline: none;
+  padding: 0 18px 0 64px;
+  width: 564px;
+}
+
+.list {
+  padding: 0;
+}
+
+.item {
+  background-color: #FFF;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 92px auto;
+  margin: 16px 18px;
+  width: 564px;
+}
+
+.item header {
+  border: 1px solid #E1E4F2;
+  border-radius: 3px 3px 0 0;
+  display: grid;
+  grid-column-gap: 16px;
+  grid-template-columns: [position] 60px [title] auto 48px 68px 80px;
+  padding: 16px;
+}
+
+.item-position {
+  color: #FFF;
+  background: #56D1CD;
+  display: block;
+  font-size: 21px;
+  line-height: 60px;
+  text-align: center;
+}
+
+.item-name {
+  color: #3B4056;
+  display: block;
+  font-size: 20px;
+  grid-column-start: title;
+  grid-row-start: 1;
+  margin-top: 4px;
+}
+
+.item-count {
+  color: #7A7F97;
+  display: block;
+  font-size: 16px;
+  grid-column-start: title;
+  grid-row-start: 1;
+  margin-top: 35px;
+}
+
+.item-male::first-line,
+.item-female::first-line,
+.item-unknown::first-line {
+  color: #3B4056;
+  font-size: 18px;
+}
+
+.item-male,
+.item-female,
+.item-unknown {
+  color: #7A7F97;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.item-male,
+.item-female {
+  padding-right: 8px;
+}
+
+.item table {
+  border: 1px solid #E1E4F2;
+  border-top: 0;
+  border-radius: 0 0 3px 3px;
+  padding: 16px;
+}
+
+.item caption {
+  color: #3B4056;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 6px;
+}
+
+.item th {
+  color: #3B4056;
+  font-size: 14px;
+  font-weight: normal;
+  text-align: left;
+  padding: 6px 0;
+  width: 130px;
+}
+
+.item .histogram {
+  background-color: #98DFDE;
+  border-radius: 3px;
+  display: inline-block;
+  height: 6px;
+}
+
+.item tr td:last-child {
+  color: #3B4056;
+  font-size: 14px;
+  text-align: right;
+  width: 55px;
+}
