@@ -2,12 +2,6 @@ const createElement = require('./createElement')
 const Component = require('./component')
 const Renderer = require('./renderer')
 
-beforeAll(() => {
-  window.requestIdleCallback = (callback) => {
-    setTimeout(callback, 100)
-  }
-})
-
 test('write div to body', () => {
   document.body.innerHTML = ''
 
