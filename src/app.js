@@ -2,14 +2,15 @@ const { Component, createElement } = require('./custom-framework')
 const Header = require('./header')
 const Search = require('./search')
 const List = require('./list')
+const datasetPreview = require('./dataset-preview.json')
 
 class App extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      data: [],
-      filteredData: [],
+      data: datasetPreview,
+      filteredData: datasetPreview,
       searchTerm: '',
     }
 

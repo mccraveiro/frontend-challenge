@@ -91,3 +91,4 @@ const aggregate = Array.from(aggregatedNames)
   .map(setBreedsHistogramValues)
 
 writeFileSync('./src/dataset.json', JSON.stringify(aggregate), 'utf8')
+writeFileSync('./src/dataset-preview.json', JSON.stringify(aggregate.slice(0, 10)), 'utf8')
