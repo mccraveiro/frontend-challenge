@@ -31,7 +31,10 @@ function reconcile(element, parent, previousInstance) {
   }
 
   if (typeof element.type === 'string') {
-    updateDom(previousInstance.dom, element.props, previousInstance.element.props)
+    if (previousInstance.element.props !== element.props) {
+      updateDom(previousInstance.dom, element.props, previousInstance.element.props)
+    }
+
     // eslint-disable-next-line no-use-before-define
     previousInstance.children = reconcileChildren(element, previousInstance)
     previousInstance.element = element
