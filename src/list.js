@@ -4,6 +4,10 @@ const Item = require('./item')
 function List(props = {}) {
   const data = props.data || []
 
+  if (data.length === 0) {
+    return createElement('span', { className: 'no-results' }, 'Sorry, no results found')
+  }
+
   return createElement(
     'ul',
     {

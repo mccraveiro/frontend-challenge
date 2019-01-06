@@ -68,17 +68,17 @@ const data = [
 ]
 
 test('returns an object', () => {
-  const list = List()
+  const list = List({ data })
   expect(typeof list).toBe('object')
 })
 
 test('has type ul', () => {
-  const list = List()
+  const list = List({ data })
   expect(list.type).toBe('ul')
 })
 
 test('has class name', () => {
-  const list = List()
+  const list = List({ data })
   expect(list.props.className).toBe('list')
 })
 
@@ -92,4 +92,9 @@ test('return "Fluffy" as item', () => {
   expect(JSON.stringify(list.props.children[0])).toEqual(
     expect.stringContaining('Fluffy'),
   )
+})
+
+test('return empty state', () => {
+  const list = List({ data: [] })
+  expect(list.props.children[0]).toBe('Sorry, no results found')
 })

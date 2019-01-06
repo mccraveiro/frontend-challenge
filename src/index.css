@@ -148,3 +148,12 @@
   text-align: right;
   width: 55px;
 }
+
+.no-results {
+  color: #3B4056;
+  display: block;
+  font-size: 16px;
+  padding: 20px 0;
+  text-align: center;
+  width: 100%;
+}
