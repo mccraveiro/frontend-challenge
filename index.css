@@ -122,7 +122,9 @@
   border-radius: 0 0 3px 3px;
   border-spacing: 0;
   border-top: 0;
+  box-sizing: border-box;
   padding: 15px 15px 7px 15px;
+  width: 100%;
 }
 
 .item caption {
