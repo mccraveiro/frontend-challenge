@@ -2,6 +2,12 @@ const createElement = require('./createElement')
 const Component = require('./component')
 const Renderer = require('./renderer')
 
+beforeAll(() => {
+  window.requestIdleCallback = (callback) => {
+    setTimeout(callback, 100)
+  }
+})
+
 test('write div to body', () => {
   document.body.innerHTML = ''
 
@@ -120,14 +126,13 @@ test('render custom component', () => {
   expect(document.body.innerHTML).toBe('<div></div>')
 })
 
-test('schedule next animation frame re-render', () => {
+test('schedule next frame re-render', () => {
   document.body.innerHTML = ''
-  const originalFn = window.requestAnimationFrame
-  window.requestAnimationFrame = jest.fn((...args) => originalFn(...args))
+  const spy = jest.spyOn(window, 'requestIdleCallback')
 
   Renderer(createElement('div'))
 
-  expect(window.requestAnimationFrame).toBeCalled()
+  expect(spy).toBeCalled()
 })
 
 
@@ -154,9 +159,9 @@ test('render component state change', (done) => {
     }
   }
 
-  jest.spyOn(window, 'requestAnimationFrame')
+  jest.spyOn(window, 'requestIdleCallback')
     .mockImplementation((callback) => {
-      window.requestAnimationFrame.mockRestore()
+      window.requestIdleCallback.mockRestore()
       callback()
       expect(document.body.innerHTML).toBe('<div>Foo</div>')
       done()
