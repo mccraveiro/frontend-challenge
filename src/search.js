@@ -9,6 +9,7 @@ function Search(props = {}) {
       {
         className: 'search-input',
         placeholder: 'Search by name',
+        'aria-label': 'Search by name',
         onkeyup: props.onkeyup,
       },
     ),

@@ -25,6 +25,11 @@ test('returns input with class', () => {
   expect(search.props.children[0].props.className).toBe('search-input')
 })
 
+test('returns input with accessibility label', () => {
+  const search = Search()
+  expect(search.props.children[0].props['aria-label']).toBe('Search by name')
+})
+
 test('returns input with onkeyup event listener', () => {
   // eslint-disable-next-line no-console
   const onkeyup = () => console.log('Hello')
