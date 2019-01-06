@@ -1,6 +1,6 @@
-const { Component } = require('./custom-framework')
+const { Component } = require('../custom-framework')
 const App = require('./app')
-const dataset = require('./dataset.json')
+const dataset = require('../dataset.json')
 
 function mockFetch() {
   const responseMock = {

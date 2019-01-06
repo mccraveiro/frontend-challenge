@@ -1,4 +1,4 @@
-const { createElement } = require('./custom-framework')
+const { createElement } = require('../custom-framework')
 
 function Search(props = {}) {
   return createElement(
