@@ -34,3 +34,9 @@ test('instance setState should change state', () => {
   component.setState({ foo: 'bar' })
   expect(component.state).toEqual({ foo: 'bar' })
 })
+
+test('instance setState should force re-render', () => {
+  const component = new Component()
+  component.setState({ foo: 'bar' })
+  expect(component.forceRender).toBe(true)
+})

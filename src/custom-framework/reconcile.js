@@ -41,8 +41,16 @@ function reconcile(element, parent, previousInstance) {
   let childElement
 
   if (previousInstance.componentInstance) {
-    previousInstance.componentInstance.props = element.props
-    childElement = previousInstance.componentInstance.render()
+    const shouldRender = previousInstance.componentInstance.forceRender
+      || previousInstance.componentInstance.props !== element.props
+
+    if (shouldRender) {
+      previousInstance.componentInstance.props = element.props
+      previousInstance.componentInstance.forceRender = false
+      childElement = previousInstance.componentInstance.render()
+    } else {
+      childElement = previousInstance.childInstance.element
+    }
   } else if (previousInstance.element.props === element.props) {
     childElement = previousInstance.childInstance.element
   } else {
