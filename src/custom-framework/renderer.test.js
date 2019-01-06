@@ -122,7 +122,7 @@ test('render custom component', () => {
 
 test('schedule next frame re-render', () => {
   document.body.innerHTML = ''
-  const spy = jest.spyOn(window, 'requestIdleCallback')
+  const spy = jest.spyOn(window, 'setTimeout')
 
   Renderer(createElement('div'))
 
@@ -153,9 +153,9 @@ test('render component state change', (done) => {
     }
   }
 
-  jest.spyOn(window, 'requestIdleCallback')
+  jest.spyOn(window, 'setTimeout')
     .mockImplementation((callback) => {
-      window.requestIdleCallback.mockRestore()
+      window.setTimeout.mockRestore()
       callback()
       expect(document.body.innerHTML).toBe('<div>Foo</div>')
       done()
