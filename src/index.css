@@ -7,7 +7,9 @@
 .header {
   color: #3B4056;
   font-size: 24px;
+  font-weight: bold;
   letter-spacing: 0;
+  line-height: 29px;
   text-align: center;
 }
 
@@ -37,8 +39,10 @@
   box-sizing: border-box;
   font-size: 18px;
   height: 56px;
+  letter-spacing: 0.1px;
+  line-height: 56px;
   outline: none;
-  padding: 0 18px 0 64px;
+  padding: 0 18px 0 61px;
   width: 564px;
 }
 
@@ -60,13 +64,14 @@
   border-radius: 3px 3px 0 0;
   display: grid;
   grid-column-gap: 16px;
-  grid-template-columns: [position] 60px [title] auto 48px 68px 80px;
-  padding: 16px;
+  grid-template-columns: [position] 60px [title] auto 49px 69px 80px;
+  padding: 15px;
 }
 
 .item-position {
   color: #FFF;
   background: #56D1CD;
+  border-radius: 3px;
   display: block;
   font-size: 21px;
   line-height: 60px;
@@ -79,7 +84,7 @@
   font-size: 20px;
   grid-column-start: title;
   grid-row-start: 1;
-  margin-top: 4px;
+  margin-top: 5px;
 }
 
 .item-count {
@@ -103,7 +108,8 @@
 .item-unknown {
   color: #7A7F97;
   font-size: 16px;
-  line-height: 26px;
+  line-height: 27px;
+  padding-top: 4px;
 }
 
 .item-male,
@@ -113,9 +119,10 @@
 
 .item table {
   border: 1px solid #E1E4F2;
-  border-top: 0;
   border-radius: 0 0 3px 3px;
-  padding: 16px;
+  border-spacing: 0;
+  border-top: 0;
+  padding: 15px 15px 7px 15px;
 }
 
 .item caption {
@@ -123,7 +130,12 @@
   display: inline-block;
   font-size: 16px;
   font-weight: bold;
-  padding-bottom: 6px;
+  line-height: 19px;
+  padding: 1px 0 8px;
+}
+
+.item td {
+  padding: 0;
 }
 
 .item th {
@@ -131,8 +143,8 @@
   font-size: 14px;
   font-weight: normal;
   text-align: left;
-  padding: 6px 0;
-  width: 130px;
+  padding: 8px 8px 8px 0;
+  width: 135px;
 }
 
 .item .histogram {
@@ -140,13 +152,16 @@
   border-radius: 3px;
   display: inline-block;
   height: 6px;
+  margin-bottom: 1px;
+  vertical-align: middle;
 }
 
 .item tr td:last-child {
   color: #3B4056;
   font-size: 14px;
+  padding-left: 8px;
   text-align: right;
-  width: 55px;
+  width: 63px;
 }
 
 .no-results {

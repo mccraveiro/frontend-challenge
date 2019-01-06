@@ -6,7 +6,7 @@ function Header() {
     {
       className: 'header',
     },
-    'Popular dogs names in NYC',
+    'Popular dog names in NYC',
   )
 }
 
