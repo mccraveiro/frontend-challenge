@@ -28,7 +28,7 @@ function renderBreed(breed) {
   )
 }
 
-function Item(props = {}) {
+function Item(props) {
   return createElement(
     'li',
     {

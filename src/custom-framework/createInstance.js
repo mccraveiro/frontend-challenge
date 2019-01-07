@@ -12,8 +12,8 @@ function createInstance(element) {
 
   if (typeof element.type === 'string') {
     const dom = document.createElement(element.type)
-    const props = element.props || {}
-    const children = (props.children || []).map(createInstance)
+    const props = element.props
+    const children = props.children.map(createInstance)
 
     updateDom(dom, props, {})
     children.forEach(child => dom.appendChild(child.dom))
@@ -25,7 +25,7 @@ function createInstance(element) {
     }
   }
 
-  const props = element.props || {}
+  const props = element.props
   // eslint-disable-next-line new-cap
   const component = new element.type(props)
   const componentInstance = component instanceof Component
