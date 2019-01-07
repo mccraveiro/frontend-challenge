@@ -42,3 +42,27 @@ test('handleSearchInput updates the state', () => {
   app.handleSearchInput({ target: { value: 'He' } })
   expect(app.state.filteredData[0].name).toBe('Henry')
 })
+
+test('retry when failed fetch', (done) => {
+  const originalConsoleError = console.error
+  const originalFetch = window.fetch
+  const failedResponse = Promise.resolve({ status: 500 })
+  const successResponse = Promise.resolve({
+    status: 200,
+    json: () => Promise.resolve(dataset),
+  })
+
+  // suppress console messages
+  console.error = jest.fn()
+
+  window.fetch = jest.fn()
+    .mockImplementationOnce(() => failedResponse)
+    .mockImplementationOnce(() => {
+      console.error = originalConsoleError
+      window.fetch = originalFetch
+      done()
+      return successResponse
+    })
+
+  const app = new App()
+})
