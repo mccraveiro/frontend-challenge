@@ -2,33 +2,31 @@ const createElement = require('./createElement')
 const Component = require('./component')
 const Renderer = require('./renderer')
 
-test('write div to body', () => {
+beforeEach(() => {
   document.body.innerHTML = ''
+})
 
+test('renderer should write div to body', () => {
   Renderer(createElement('div'))
 
   expect(document.body.innerHTML).toBe('<div></div>')
 })
 
-test('write text to body', () => {
-  document.body.innerHTML = ''
-
+test('renderer should write text to body', () => {
   const element = createElement('div', {}, 'Hello world')
   Renderer(element)
 
   expect(document.body.innerHTML).toBe('<div>Hello world</div>')
 })
 
-test('set className to div', () => {
-  document.body.innerHTML = ''
-
+test('renderer should set a className to a div', () => {
   const element = createElement('div', { className: 'styled' })
   Renderer(element)
 
   expect(document.body.innerHTML).toBe('<div class="styled"></div>')
 })
 
-test('render to custom element', () => {
+test('renderer should write a custom element', () => {
   document.body.innerHTML = '<div id="root"></div>'
 
   const element = createElement('span', {}, 'Hello world')
@@ -37,9 +35,7 @@ test('render to custom element', () => {
   expect(document.body.innerHTML).toBe('<div id="root"><span>Hello world</span></div>')
 })
 
-test('write elements recursively', () => {
-  document.body.innerHTML = ''
-
+test('renderer should write elements recursively', () => {
   const anchor = createElement('a', {}, 'Hello world')
   const li = createElement('li', {}, anchor)
   const element = createElement('ul', {}, li)
@@ -48,9 +44,7 @@ test('write elements recursively', () => {
   expect(document.body.innerHTML).toBe('<ul><li><a>Hello world</a></li></ul>')
 })
 
-test('render custom element', () => {
-  document.body.innerHTML = ''
-
+test('rendered should write a custom element', () => {
   function customElement() {
     return createElement('div')
   }
@@ -60,9 +54,7 @@ test('render custom element', () => {
   expect(document.body.innerHTML).toBe('<div></div>')
 })
 
-test('render custom element with props', () => {
-  document.body.innerHTML = ''
-
+test('renderer should write a custom element with props', () => {
   function customElement(props) {
     return createElement(props.tag)
   }
@@ -72,9 +64,7 @@ test('render custom element with props', () => {
   expect(document.body.innerHTML).toBe('<span></span>')
 })
 
-test('render custom element with text children', () => {
-  document.body.innerHTML = ''
-
+test('renderer should write a custom element with text children', () => {
   function customElement(props) {
     return createElement(props.tag, {}, ...props.children)
   }
@@ -84,9 +74,7 @@ test('render custom element with text children', () => {
   expect(document.body.innerHTML).toBe('<span>Hello world</span>')
 })
 
-test('render custom element with custom children', () => {
-  document.body.innerHTML = ''
-
+test('renderer should write a custom element with a custom children', () => {
   function customChild(props) {
     return createElement('li', {}, ...props.children)
   }
@@ -105,9 +93,7 @@ test('render custom element with custom children', () => {
   expect(document.body.innerHTML).toBe('<ul><li>Foo</li><li>Bar</li></ul>')
 })
 
-test('render custom component', () => {
-  document.body.innerHTML = ''
-
+test('renderer should write a custom component', () => {
   class customComponent extends Component {
     // eslint-disable-next-line class-methods-use-this
     render() {
@@ -120,8 +106,7 @@ test('render custom component', () => {
   expect(document.body.innerHTML).toBe('<div></div>')
 })
 
-test('schedule next frame re-render', () => {
-  document.body.innerHTML = ''
+test('renderer should schedule next frame re-render', () => {
   const spy = jest.spyOn(window, 'setTimeout')
 
   Renderer(createElement('div'))
@@ -129,10 +114,7 @@ test('schedule next frame re-render', () => {
   expect(spy).toBeCalled()
 })
 
-
-test('render component state change', (done) => {
-  document.body.innerHTML = ''
-
+test('renderer should write component state changes', (done) => {
   class customComponent extends Component {
     constructor(props) {
       super(props)
@@ -162,142 +144,4 @@ test('render component state change', (done) => {
     })
 
   Renderer(createElement(customComponent))
-})
-
-// Reconciliation
-test('do not remove siblings', () => {
-  document.body.innerHTML = ''
-
-  const anchorA = createElement('a', {}, 'Hello world')
-  const anchorB = createElement('a', {}, 'Hello world')
-  const liA = createElement('li', {}, anchorA)
-  const liB = createElement('li', {}, anchorB)
-  const element = createElement('ul', {}, liA, liB)
-  Renderer(element)
-
-  expect(document.body.innerHTML).toBe('<ul><li><a>Hello world</a></li><li><a>Hello world</a></li></ul>')
-})
-
-test('do not re-render div', () => {
-  const initialDOM = document.createElement('div')
-  const element = createElement('div')
-
-  document.body.innerHTML = ''
-  document.body.appendChild(initialDOM)
-
-  Renderer(element, document.body, {
-    element,
-    dom: initialDOM,
-    children: [],
-  })
-
-  const finalDOM = document.body.firstChild
-
-  expect(initialDOM.isSameNode(finalDOM)).toBe(true)
-})
-
-test('do not re-render div but update text', () => {
-  const initialDOM = document.createElement('div')
-  const child = document.createTextNode('Hello world')
-  initialDOM.appendChild(child)
-  const element = createElement('div', {}, 'Foo')
-
-  document.body.innerHTML = ''
-  document.body.appendChild(initialDOM)
-
-  Renderer(element, document.body, {
-    element,
-    dom: initialDOM,
-    children: [{
-      element: 'Hello world',
-      dom: child,
-      children: [],
-    }],
-  })
-
-  const finalDOM = document.body.firstChild
-
-  expect(initialDOM.isSameNode(finalDOM)).toBe(true)
-  expect(document.body.innerHTML).toBe('<div>Foo</div>')
-})
-
-test('do not re-render div but replace children', () => {
-  const initialDOM = document.createElement('div')
-  const child = document.createElement('a')
-  initialDOM.appendChild(child)
-
-  const element = createElement('div', {}, createElement('span'))
-
-  document.body.innerHTML = ''
-  document.body.appendChild(initialDOM)
-
-  Renderer(element, document.body, {
-    element,
-    dom: initialDOM,
-    children: [{
-      element: createElement('a'),
-      dom: child,
-      children: [],
-    }],
-  })
-
-  const finalDOM = document.body.firstChild
-
-  expect(initialDOM.isSameNode(finalDOM)).toBe(true)
-  expect(document.body.innerHTML).toBe('<div><span></span></div>')
-})
-
-test('do not re-render div but remove children', () => {
-  const initialDOM = document.createElement('div')
-  const child = document.createElement('a')
-  initialDOM.appendChild(child)
-
-  const element = createElement('div')
-
-  document.body.innerHTML = ''
-  document.body.appendChild(initialDOM)
-
-  Renderer(element, document.body, {
-    element,
-    dom: initialDOM,
-    children: [{
-      element: createElement('a'),
-      dom: child,
-      children: [],
-    }],
-  })
-
-  const finalDOM = document.body.firstChild
-
-  expect(initialDOM.isSameNode(finalDOM)).toBe(true)
-  expect(document.body.innerHTML).toBe('<div></div>')
-})
-
-test('do not re-render text', () => {
-  const initialDOM = document.createElement('div')
-  const child = document.createTextNode('Hello world')
-  const textContentSetter = jest.fn()
-
-  Object.defineProperty(child, 'textContent', {
-    set: textContentSetter,
-  })
-
-  initialDOM.appendChild(child)
-  const element = createElement('div', {}, 'Hello world')
-
-  document.body.innerHTML = ''
-  document.body.appendChild(initialDOM)
-
-  Renderer(element, document.body, {
-    element,
-    dom: initialDOM,
-    children: [{
-      element: 'Hello world',
-      dom: child,
-      children: [],
-    }],
-  })
-
-  expect(textContentSetter).not.toHaveBeenCalled()
-  expect(document.body.innerHTML).toBe('<div>Hello world</div>')
 })

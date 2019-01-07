@@ -1,41 +1,41 @@
 const Component = require('./component')
 
-test('returns a class', () => {
+test('Component should be a constructor', () => {
   expect(typeof Component).toBe('function')
 })
 
-test('instantiate a component', () => {
+test('Component should instantiate a component', () => {
   const component = new Component()
   expect(component instanceof Component).toBe(true)
 })
 
-test('instance has props', () => {
+test('component instance should have a props object', () => {
   const component = new Component()
   expect(typeof component.props).toBe('object')
 })
 
-test('instance stores props', () => {
+test('component instance should store passed props', () => {
   const component = new Component({ foo: 'bar' })
   expect(component.props.foo).toBe('bar')
 })
 
-test('instance stores state', () => {
+test('component instance should store a state', () => {
   const component = new Component()
   expect(typeof component.state).toBe('object')
 })
 
-test('instance has setState', () => {
+test('component instance should have a setState method', () => {
   const component = new Component()
   expect(typeof component.setState).toBe('function')
 })
 
-test('instance setState should change state', () => {
+test('the setState method should change the component state', () => {
   const component = new Component()
   component.setState({ foo: 'bar' })
   expect(component.state).toEqual({ foo: 'bar' })
 })
 
-test('instance setState should force re-render', () => {
+test('the setState method should force a re-render', () => {
   const component = new Component()
   component.setState({ foo: 'bar' })
   expect(component.forceRender).toBe(true)

@@ -8,42 +8,40 @@ function mockFetch() {
     json: () => Promise.resolve(dataset),
   }
   const fetchMock = () => Promise.resolve(responseMock)
-
   global.fetch = jest.fn(fetchMock)
 }
 
-beforeAll(() => {
-  mockFetch()
-})
+beforeAll(mockFetch)
 
-test('instance of Component', () => {
+test('app should extends Component', () => {
   const app = new App()
   expect(app instanceof Component).toBe(true)
 })
 
-test('renders an object', () => {
+test('render method should return an object', () => {
   const app = new App()
   expect(typeof app.render()).toBe('object')
 })
 
-test('returns class name', () => {
+test('rendered element should have a class name', () => {
   const app = new App()
   expect(app.render().props.className).toBe('app')
 })
 
-test('renders three children', () => {
+test('rendered element should have three children', () => {
   const app = new App()
   expect(app.render().props.children.length).toBe(3)
 })
 
-test('handleSearchInput updates the state', () => {
+test('handleSearchInput method should update the component state', () => {
   const app = new App()
   app.state.data = dataset
   app.handleSearchInput({ target: { value: 'He' } })
   expect(app.state.filteredData[0].name).toBe('Henry')
 })
 
-test('retry when failed fetch', (done) => {
+test('loadData method should retry when network fails', (done) => {
+  // eslint-disable-next-line no-console
   const originalConsoleError = console.error
   const originalFetch = window.fetch
   const failedResponse = Promise.resolve({ status: 500 })
@@ -53,16 +51,19 @@ test('retry when failed fetch', (done) => {
   })
 
   // suppress console messages
+  // eslint-disable-next-line no-console
   console.error = jest.fn()
 
   window.fetch = jest.fn()
     .mockImplementationOnce(() => failedResponse)
     .mockImplementationOnce(() => {
+      // eslint-disable-next-line no-console
       console.error = originalConsoleError
       window.fetch = originalFetch
       done()
       return successResponse
     })
 
-  const app = new App()
+  // eslint-disable-next-line no-new
+  new App()
 })

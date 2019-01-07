@@ -67,34 +67,34 @@ const data = [
   },
 ]
 
-test('returns an object', () => {
+test('component should render an object', () => {
   const list = List({ data })
   expect(typeof list).toBe('object')
 })
 
-test('has type ul', () => {
+test('rendered element should be a list', () => {
   const list = List({ data })
   expect(list.type).toBe('ul')
 })
 
-test('has class name', () => {
+test('rendered element should have a class name', () => {
   const list = List({ data })
   expect(list.props.className).toBe('list')
 })
 
-test('return 2 children', () => {
+test('rendered element should have 2 children', () => {
   const list = List({ data })
   expect(list.props.children.length).toBe(2)
 })
 
-test('return "Fluffy" as item', () => {
+test('rendered element should have "Fluffy" as first item', () => {
   const list = List({ data })
   expect(JSON.stringify(list.props.children[0])).toEqual(
     expect.stringContaining('Fluffy'),
   )
 })
 
-test('return empty state', () => {
+test('rendered element should be a no results message', () => {
   const list = List({ data: [] })
   expect(list.props.children[0]).toBe('Sorry, no results found')
 })

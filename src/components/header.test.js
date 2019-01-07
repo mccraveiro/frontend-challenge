@@ -1,26 +1,19 @@
 const Header = require('./header')
 
-test('returns an object', () => {
-  const header = Header()
+const header = Header()
+
+test('component should render an object', () => {
   expect(typeof header).toBe('object')
 })
 
-test('returns a header element', () => {
-  const header = Header()
+test('rendered element type should be header', () => {
   expect(header.type).toBe('header')
 })
 
-test('returns children property', () => {
-  const header = Header()
-  expect(Array.isArray(header.props.children)).toBe(true)
-})
-
-test('returns text node as child', () => {
-  const header = Header()
+test('rendered element should have text node as child', () => {
   expect(typeof header.props.children[0]).toBe('string')
 })
 
-test('returns className property', () => {
-  const header = Header()
+test('rendered element should have a class name', () => {
   expect(header.props.className).toBe('header')
 })

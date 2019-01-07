@@ -1,6 +1,6 @@
 const updateDom = require('./updateDom')
 
-test('add className', () => {
+test('updateDom should add a class name', () => {
   const dom = document.createElement('div')
   const props = { className: 'foo' }
 
@@ -9,20 +9,21 @@ test('add className', () => {
   expect(dom.className).toBe('foo')
 })
 
-test('remove className', () => {
+test('updateDom should remove a class name', () => {
   const dom = document.createElement('div')
-  dom.removeAttribute = jest.fn()
   const props = {}
   const prevProps = {
     className: 'foo',
   }
+
+  jest.spyOn(dom, 'removeAttribute')
 
   updateDom(dom, props, prevProps)
 
   expect(dom.removeAttribute).toHaveBeenCalledWith('class')
 })
 
-test('add multiple attributes', () => {
+test('updateDom should add multiple attributes', () => {
   const dom = document.createElement('input')
   const props = {
     id: 'abc',
@@ -37,7 +38,7 @@ test('add multiple attributes', () => {
   expect(dom.type).toBe('password')
 })
 
-test('update className', () => {
+test('updateDom should update a class name', () => {
   const dom = document.createElement('div')
   const props = { className: 'bar' }
   const prevProps = { className: 'foo' }
@@ -47,38 +48,40 @@ test('update className', () => {
   expect(dom.className).toBe('bar')
 })
 
-test('remove placeholder', () => {
+test('updateDom should remove a placeholder', () => {
   const dom = document.createElement('input')
-  dom.removeAttribute = jest.fn()
   const props = {}
   const prevProps = {
     placeholder: 'Search',
   }
+
+  jest.spyOn(dom, 'removeAttribute')
 
   updateDom(dom, props, prevProps)
 
   expect(dom.removeAttribute).toHaveBeenCalledWith('placeholder')
 })
 
-test('add onchange listener', () => {
+test('updateDom should add a onchange listener', () => {
   const onchange = () => {}
   const dom = document.createElement('input')
-  const addEventListener = jest.fn()
-  dom.addEventListener = addEventListener
   const props = { onchange }
+
+  jest.spyOn(dom, 'addEventListener')
 
   updateDom(dom, props)
 
   expect(dom.addEventListener).toHaveBeenCalledWith('change', onchange)
 })
 
-test('keep existing listeners', () => {
+test('updateDom should keep any existing listeners', () => {
   const onchange = () => {}
   const dom = document.createElement('input')
-  dom.addEventListener = jest.fn()
-  dom.removeEventListener = jest.fn()
   const props = { onchange }
   const prevProps = { onchange }
+
+  jest.spyOn(dom, 'addEventListener')
+  jest.spyOn(dom, 'removeEventListener')
 
   updateDom(dom, props, prevProps)
 
@@ -86,26 +89,28 @@ test('keep existing listeners', () => {
   expect(dom.removeEventListener).not.toHaveBeenCalled()
 })
 
-test('remove existing listeners', () => {
+test('updateDom should remove existing listeners', () => {
   const onchange = () => {}
   const dom = document.createElement('input')
-  dom.removeEventListener = jest.fn()
   const props = {}
   const prevProps = { onchange }
+
+  jest.spyOn(dom, 'removeEventListener')
 
   updateDom(dom, props, prevProps)
 
   expect(dom.removeEventListener).toHaveBeenCalledWith('change', onchange)
 })
 
-test('update existing listeners', () => {
+test('updateDom should update existing listeners', () => {
   const onchange = () => {}
   const prevOnchange = () => {}
   const dom = document.createElement('input')
-  dom.removeEventListener = jest.fn()
-  dom.addEventListener = jest.fn()
   const props = { onchange }
   const prevProps = { onchange: prevOnchange }
+
+  jest.spyOn(dom, 'addEventListener')
+  jest.spyOn(dom, 'removeEventListener')
 
   updateDom(dom, props, prevProps)
 
