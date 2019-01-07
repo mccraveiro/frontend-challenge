@@ -23,7 +23,7 @@ function reconcile(element, parent, previousInstance) {
     return previousInstance
   }
 
-  if (previousInstance.element.type !== element.type) {
+  if (typeof element.type === 'string' && previousInstance.element.type !== element.type) {
     const instance = createInstance(element)
     parent.replaceChild(instance.dom, previousInstance.dom)
     parent.appendChild(instance.dom)
@@ -70,7 +70,7 @@ function reconcile(element, parent, previousInstance) {
 
 function reconcileChildren(element, previousInstance) {
   const instanceChildren = previousInstance.children
-  const elementChildren = element.props.children || []
+  const elementChildren = element.props.children
   const reconciliatedChildren = []
   const childrenCount = Math.max(instanceChildren.length, elementChildren.length)
 
