@@ -26,7 +26,6 @@ function reconcile(element, parent, previousInstance) {
   if (typeof element.type === 'string' && previousInstance.element.type !== element.type) {
     const instance = createInstance(element)
     parent.replaceChild(instance.dom, previousInstance.dom)
-    parent.appendChild(instance.dom)
     return instance
   }
 
