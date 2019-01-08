@@ -45,6 +45,9 @@ body,
 }
 
 .search-input {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
   background-color: #FFF;
   border-radius: 28px;
   border: 2px solid #E1E4F2;
