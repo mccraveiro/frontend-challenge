@@ -1,7 +1,7 @@
 function createElement(type, properties, ...children) {
   const props = {
     ...properties,
-    children,
+    children: children.filter(child => !!child),
   }
 
   return {

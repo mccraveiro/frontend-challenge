@@ -23,3 +23,8 @@ test('created object should store passed children', () => {
   const element = createElement('div', {}, 'Hello world')
   expect(element.props.children[0]).toBe('Hello world')
 })
+
+test('created object should delete null children', () => {
+  const element = createElement('div', {}, null)
+  expect(element.props.children.length).toBe(0)
+})
