@@ -1,7 +1,7 @@
 const { createElement } = require('../custom-framework')
 const Item = require('./item')
 
-function List({ data }) {
+function List({ data, onbreedFilter, breedNameSearchTerm }) {
   if (data.length === 0) {
     return createElement('span', { className: 'no-results' }, 'Sorry, no results found')
   }
@@ -11,7 +11,7 @@ function List({ data }) {
     {
       className: 'list',
     },
-    ...data.map(Item),
+    ...data.map((x) => Item({ ...x, onbreedFilter, breedNameSearchTerm })),
   )
 }
 

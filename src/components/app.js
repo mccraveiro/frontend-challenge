@@ -12,17 +12,26 @@ class App extends Component {
       data: datasetPreview,
       filteredData: datasetPreview,
       searchTerm: '',
+      breedNameSearchTerm: '',
     }
 
     this.handleSearchInput = this.handleSearchInput.bind(this)
+    this.handleBreedSearchInput = this.handleBreedSearchInput.bind(this)
+    this.clearBreedSearch = this.clearBreedSearch.bind(this)
     this.loadData()
   }
 
   filterData() {
     const searchTerm = new RegExp(this.state.searchTerm, 'i')
+    const breedSearchTerm = new RegExp(this.state.breedNameSearchTerm, 'i')
     this.setState({
       ...this.state,
-      filteredData: this.state.data.filter(dog => searchTerm.test(dog.name)),
+      filteredData: this.state.data.filter(dog => {
+        const foundName = searchTerm.test(dog.name)
+        const foundBreed = dog.breeds.find((breed) => breedSearchTerm.test(breed.name))
+
+        return foundName && foundBreed
+      }),
     })
   }
 
@@ -58,13 +67,37 @@ class App extends Component {
     this.filterData()
   }
 
+  handleBreedSearchInput(breedName) {
+    this.setState({
+      ...this.state,
+      breedNameSearchTerm: breedName,
+    })
+    this.filterData()
+  }
+
+  clearBreedSearch() {
+    this.setState({
+      ...this.state,
+      breedNameSearchTerm: '',
+    })
+    this.filterData()
+  }
+
   render() {
     return createElement(
       'div',
       { className: 'app' },
       createElement(Header),
-      createElement(Search, { onkeyup: this.handleSearchInput }),
-      createElement(List, { data: this.state.filteredData }),
+      createElement(Search, {
+        onkeyup: this.handleSearchInput,
+        breedNameSearchTerm: this.state.breedNameSearchTerm,
+        clearBreedSearch: this.clearBreedSearch,
+      }),
+      createElement(List, {
+        data: this.state.filteredData,
+        onbreedFilter: this.handleBreedSearchInput,
+        breedNameSearchTerm: this.state.breedNameSearchTerm,
+      }),
     )
   }
 }

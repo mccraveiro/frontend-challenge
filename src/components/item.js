@@ -7,7 +7,14 @@ function renderBreed(breed) {
     createElement(
       'th',
       {},
-      breed.name,
+      createElement(
+        'a',
+        {
+          href: '#',
+          onclick: () => breed.onbreedFilter(breed.name),
+        },
+        breed.name
+      ),
     ),
     createElement(
       'td',
@@ -48,7 +55,14 @@ function Item(props) {
       'table',
       {},
       createElement('caption', {}, 'Top breeds'),
-      ...props.breeds.map(renderBreed),
+      ...props.breeds.reduce((acc, x) => {
+
+        props.breedNameSearchTerm === ''
+        ? acc.push(renderBreed({ ...x, onbreedFilter: props.onbreedFilter }))
+        : props.breedNameSearchTerm === x.name && acc.push(renderBreed({ ...x, onbreedFilter: props.onbreedFilter }))
+
+        return acc
+      }, []),
     ),
   )
 }
