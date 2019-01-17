@@ -44,3 +44,14 @@ test('rendered search input should have an onkeyup event listener', () => {
   })
   expect(search.props.children[0].props.onkeyup).toBe(onkeyup)
 })
+
+test('rendered element should have a breed name filter', () => {
+  const clearBreedNameFilter = () => {}
+  const search = Search({
+    breedNameFilter: 'Shih Tzu',
+    clearBreedNameFilter,
+  })
+  expect(search.props.children[1].type).toBe('a')
+  expect(search.props.children[1].props.children[0]).toBe('x Shih Tzu')
+  expect(search.props.children[1].props.onclick).toBe(clearBreedNameFilter)
+})

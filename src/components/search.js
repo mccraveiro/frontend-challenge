@@ -1,6 +1,12 @@
 const { createElement } = require('../custom-framework')
 
 function Search(props = {}) {
+  const {
+    onkeyup,
+    breedNameFilter,
+    clearBreedNameFilter,
+  } = props
+
   return createElement(
     'form',
     {
@@ -14,8 +20,16 @@ function Search(props = {}) {
         className: 'search-input',
         placeholder: 'Search by name',
         'aria-label': 'Search by name',
-        onkeyup: props.onkeyup,
+        onkeyup,
       },
+    ),
+    breedNameFilter && createElement(
+      'a',
+      {
+        href: '#',
+        onclick: clearBreedNameFilter,
+      },
+      `x ${breedNameFilter}`,
     ),
   )
 }
