@@ -31,6 +31,8 @@ const example = {
       histogram: 25,
     },
   ],
+  onBreedClick() {},
+  breedNameFilter: '',
 }
 
 const item = Item(example)
@@ -109,7 +111,9 @@ test('rendered element top breeds should have the Golden Retriever', () => {
   const { children } = firstRow.props
   expect(firstRow.type).toBe('tr')
   expect(children[0].type).toBe('th')
-  expect(children[0].props.children[0]).toBe('Golden Retriever')
+  expect(children[0].props.children[0].type).toBe('a')
+  expect(typeof children[0].props.children[0].props.onclick).toBe('function')
+  expect(children[0].props.children[0].props.children[0]).toBe('Golden Retriever')
   expect(children[1].type).toBe('td')
   expect(children[1].props.children[0].type).toBe('span')
   expect(children[1].props.children[0].props.className).toBe('histogram')
@@ -124,7 +128,9 @@ test('rendered element top breeds should have the Unknown breed', () => {
   const { children } = secondRow.props
   expect(secondRow.type).toBe('tr')
   expect(children[0].type).toBe('th')
-  expect(children[0].props.children[0]).toBe('Unknown')
+  expect(children[0].props.children[0].type).toBe('a')
+  expect(typeof children[0].props.children[0].props.onclick).toBe('function')
+  expect(children[0].props.children[0].props.children[0]).toBe('Unknown')
   expect(children[1].type).toBe('td')
   expect(children[1].props.children[0].type).toBe('span')
   expect(children[1].props.children[0].props.className).toBe('histogram')
@@ -139,7 +145,9 @@ test('rendered element top breeds should have the Pug', () => {
   const { children } = thirdRow.props
   expect(thirdRow.type).toBe('tr')
   expect(children[0].type).toBe('th')
-  expect(children[0].props.children[0]).toBe('Pug')
+  expect(children[0].props.children[0].type).toBe('a')
+  expect(typeof children[0].props.children[0].props.onclick).toBe('function')
+  expect(children[0].props.children[0].props.children[0]).toBe('Pug')
   expect(children[1].type).toBe('td')
   expect(children[1].props.children[0].type).toBe('span')
   expect(children[1].props.children[0].props.className).toBe('histogram')
@@ -154,11 +162,38 @@ test('rendered element top breeds should have the Cocker Spaniel', () => {
   const { children } = fourthRow.props
   expect(fourthRow.type).toBe('tr')
   expect(children[0].type).toBe('th')
-  expect(children[0].props.children[0]).toBe('Cocker Spaniel')
+  expect(children[0].props.children[0].type).toBe('a')
+  expect(typeof children[0].props.children[0].props.onclick).toBe('function')
+  expect(children[0].props.children[0].props.children[0]).toBe('Cocker Spaniel')
   expect(children[1].type).toBe('td')
   expect(children[1].props.children[0].type).toBe('span')
   expect(children[1].props.children[0].props.className).toBe('histogram')
   expect(children[1].props.children[0].props.style).toBe('width: 25%')
   expect(children[2].type).toBe('td')
   expect(children[2].props.children[0]).toBe('819')
+})
+
+test('rendered breed name click should call onBreedClick', () => {
+  const onBreedClick = jest.fn()
+  const clickableItem = Item({
+    ...example,
+    onBreedClick,
+  })
+  const table = clickableItem.props.children[1]
+  const firstRow = table.props.children[1]
+  const { children } = firstRow.props
+  children[0].props.children[0].props.onclick()
+  expect(onBreedClick).toHaveBeenCalledWith('Golden Retriever')
+})
+
+test('rendered element should show only selected breed', () => {
+  const filteredItem = Item({
+    ...example,
+    breedNameFilter: 'Pug',
+  })
+  const table = filteredItem.props.children[1]
+  const firstRow = table.props.children[1]
+  const { children } = firstRow.props
+  expect(table.props.children.length).toBe(2)
+  expect(children[0].props.children[0].props.children[0]).toBe('Pug')
 })

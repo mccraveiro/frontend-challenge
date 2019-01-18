@@ -1,13 +1,28 @@
 const { createElement } = require('../custom-framework')
 
-function renderBreed(breed) {
+function renderBreed({
+  name,
+  histogram,
+  count,
+  onBreedClick,
+  breedNameFilter,
+}) {
+  if (breedNameFilter !== '' && breedNameFilter !== name) return null
+
   return createElement(
     'tr',
     {},
     createElement(
       'th',
       {},
-      breed.name,
+      createElement(
+        'a',
+        {
+          href: '#',
+          onclick: () => onBreedClick(name),
+        },
+        name,
+      ),
     ),
     createElement(
       'td',
@@ -16,19 +31,27 @@ function renderBreed(breed) {
         'span',
         {
           className: 'histogram',
-          style: `width: ${breed.histogram}%`,
+          style: `width: ${histogram}%`,
         },
       ),
     ),
     createElement(
       'td',
       {},
-      breed.count.toString(),
+      count.toString(),
     ),
   )
 }
 
-function Item(props) {
+function Item({
+  position,
+  name,
+  count,
+  gender,
+  breeds,
+  onBreedClick,
+  breedNameFilter,
+}) {
   return createElement(
     'li',
     {
@@ -37,18 +60,22 @@ function Item(props) {
     createElement(
       'header',
       {},
-      createElement('span', { className: 'item-position' }, props.position.toString()),
-      createElement('h2', { className: 'item-name' }, props.name),
-      createElement('span', { className: 'item-count' }, `${props.count} dogs`),
-      createElement('span', { className: 'item-male' }, `Male ${props.gender.male}%`),
-      createElement('span', { className: 'item-female' }, `Female ${props.gender.female}%`),
-      createElement('span', { className: 'item-unknown' }, `Unknown ${props.gender.unknown}%`),
+      createElement('span', { className: 'item-position' }, position.toString()),
+      createElement('h2', { className: 'item-name' }, name),
+      createElement('span', { className: 'item-count' }, `${count} dogs`),
+      createElement('span', { className: 'item-male' }, `Male ${gender.male}%`),
+      createElement('span', { className: 'item-female' }, `Female ${gender.female}%`),
+      createElement('span', { className: 'item-unknown' }, `Unknown ${gender.unknown}%`),
     ),
     createElement(
       'table',
       {},
       createElement('caption', {}, 'Top breeds'),
-      ...props.breeds.map(renderBreed),
+      ...breeds.map(breed => renderBreed({
+        ...breed,
+        onBreedClick,
+        breedNameFilter,
+      })),
     ),
   )
 }
