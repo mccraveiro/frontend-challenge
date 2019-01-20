@@ -52,6 +52,7 @@ test('rendered element should have a breed name filter', () => {
     clearBreedNameFilter,
   })
   expect(search.props.children[1].type).toBe('a')
-  expect(search.props.children[1].props.children[0]).toBe('x Shih Tzu')
+  expect(search.props.children[1].props.children[0]).toBe('Shih Tzu')
   expect(search.props.children[1].props.onclick).toBe(clearBreedNameFilter)
+  expect(search.props.children[1].props.className).toBe('breed-filter')
 })

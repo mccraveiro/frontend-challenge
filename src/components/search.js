@@ -28,8 +28,9 @@ function Search(props = {}) {
       {
         href: '#',
         onclick: clearBreedNameFilter,
+        className: 'breed-filter',
       },
-      `x ${breedNameFilter}`,
+      breedNameFilter,
     ),
   )
 }
