@@ -67,3 +67,26 @@ test('loadData method should retry when network fails', (done) => {
   // eslint-disable-next-line no-new
   new App()
 })
+
+test('onBreedClick method should update the component state', () => {
+  const app = new App()
+  app.state.data = dataset
+  app.onBreedClick('Labrador Retriever')
+  expect(app.state.filteredData[0].name).toBe('Lucy')
+})
+
+test('onBreedClick should work with a name search', () => {
+  const app = new App()
+  app.state.data = dataset
+  app.handleSearchInput({ target: { value: 'Bu' } })
+  app.onBreedClick('Labrador Retriever')
+  expect(app.state.filteredData[0].name).toBe('Buddy')
+})
+
+test('clearBreedNameFilter method should clear breed filter', () => {
+  const app = new App()
+  app.state.data = dataset
+  app.onBreedClick('Labrador Retriever')
+  app.clearBreedNameFilter()
+  expect(app.state.filteredData[0].name).toBe('Bella')
+})
